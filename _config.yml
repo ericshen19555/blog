@@ -102,7 +102,7 @@ theme: frame
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: git
-  repo: ericshen19555.github.io/blog
+  repo: https://github.com/ericshen19555/blog
   branch: main
 
 # Local Search
