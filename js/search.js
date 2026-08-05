@@ -42,6 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!localSearch.isfetched) return;
     const searchText = input.value.trim().toLowerCase();
     const keywords = searchText.split(/[-\s]+/);
+    let resultItems = [];
     if (searchText.length > 0) {
       resultItems = localSearch.getResultItems(keywords);
     }
