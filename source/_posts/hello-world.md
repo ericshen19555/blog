@@ -1,38 +1,44 @@
 ---
-title: Hello World
+title: Hello World!
 ---
-Welcome to [Hexo](https://hexo.io/)! This is your very first post. Check [documentation](https://hexo.io/docs/) for more info. If you get any problems when using Hexo, you can find the answer in [troubleshooting](https://hexo.io/docs/troubleshooting.html) or you can ask me on [GitHub](https://github.com/hexojs/hexo/issues).
 
-## Quick Start
+# 大標題
+## 中標題
+### 小標題
+#### 迷你標題
+##### 泰你標題
+###### 很弱的標題
 
-### Create a new post
+普通 *斜咖* **胖子** ++地板++ ~~欄杆~~
 
-``` bash
-$ hexo new "My New Post"
+> 左邊有柱子
+
+1. 是左腳
+2. 是右腳
+
+- 點點
+- 第二個點點
+* 分開一點點
+
+`blue code!`
+
+```cpp line_number:0
+const bool line_number = false;
 ```
 
-More info: [Writing](https://hexo.io/docs/writing.html)
-
-### Run server
-
-``` bash
-$ hexo server
+```python
+line_number = True
 ```
+<br>
 
-More info: [Server](https://hexo.io/docs/server.html)
+Inline $\LaTeX$
 
-### Generate static files
+$$\LaTeX$$
 
-``` bash
-$ hexo generate
-```
+<details>
+<summary>暴雷</summary>
+被你發現了 :0
+</details>
 
-More info: [Generating](https://hexo.io/docs/generating.html)
+[超連結](https://www.youtube.com/watch?v=dQw4w9WgXcQ)
 
-### Deploy to remote sites
-
-``` bash
-$ hexo deploy
-```
-
-More info: [Deployment](https://hexo.io/docs/one-command-deployment.html)
