@@ -37,6 +37,11 @@ Inline $\LaTeX$
 
 $$\LaTeX$$
 
+{% spoiler 防雷海苔 %}
+
+<br>
+<br>
+
 <details>
 <summary>暴雷</summary>
 被你發現了 :0
