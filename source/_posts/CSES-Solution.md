@@ -49,7 +49,7 @@ def main():
 main()
 ```
 
-推類題：[區間考拉茲操作](https://oj.ntucpc.org/problems/943)，考點是 ||分塊 or 線段樹||。
+推類題：[區間考拉茲操作](https://oj.ntucpc.org/problems/943)，考點是 {% spoiler 分塊 or 線段樹 %}。
 
 ### [Missing Number](https://cses.fi/problemset/task/1083)
 
