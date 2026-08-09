@@ -12,6 +12,7 @@ logo_image:
 menu:
   Home: /
   Archive: /archives/
+  Tags: /tag/
   # Gallery: /categories/gallery/
 
 # stylesheets loaded in the <head>
