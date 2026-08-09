@@ -8,6 +8,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
         with:
@@ -28,6 +30,20 @@ jobs:
         run: npm install
       - name: Build
         run: npm run build
+      - name: Disable Jekyll processing
+        run: touch public/.nojekyll
+      - name: Publish generated site to gh-pages
+        run: |
+          cd public
+          git init
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b gh-pages
+          git add -A
+          git commit -m "Site updated: $(date -u '+%Y-%m-%d %H:%M:%S')"
+          git push --force "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" gh-pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:

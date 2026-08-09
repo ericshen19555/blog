@@ -6,3 +6,22 @@ node_modules/
 public/
 .deploy*/
 _multiconfig.yml
+
+# Generated site output should not be committed to the source branch.
+/2026/
+/archives/
+/categories/
+/tags/
+/css/
+/fonts/
+/icon/
+/js/
+/index.html
+/search.json
+/favicon.ico
+/logo.png
+/profile_cover.png
+/*.jpg
+
+# Local backup of the theme's original nested git metadata.
+/themes/frame/.git.codex-backup/
