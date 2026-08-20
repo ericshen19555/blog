@@ -23,6 +23,7 @@ stylesheets:
 scripts:
 - /js/menu.js
 - /js/format.js
+- /js/features/content.js
 
 # favicon
 favicon: /小惡魔.jpg
