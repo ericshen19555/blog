@@ -1,5 +1,20 @@
 <article id="post">
 
+  <% if (is_post() && page.content && toc(page.content)) { %>
+    <aside id="floating-toc" class="post-toc" aria-label="Table of contents">
+      <div class="post-toc-panel" aria-hidden="true">
+        <div class="post-toc-header">
+          <span class="toc-title">Contents</span>
+          <button class="toc-pin" type="button" aria-label="Pin contents" aria-pressed="false">📌</button>
+        </div>
+        <div class="post-toc-scroll"><div class="toc-entries"><%- toc(page.content, {list_number: false, max_depth: 3}) %></div></div>
+      </div>
+      <div class="post-toc-rail">
+        <span class="toc-rail-icon" aria-hidden="true">☰</span>
+      </div>
+    </aside>
+  <% } %>
+
   <% if (is_post()) {%>
     <%- partial('post/post_head') %>
     <%- partial('post/post_content') %>

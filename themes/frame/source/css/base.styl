@@ -11,6 +11,31 @@ ul
 *::before, *::after
   box-sizing border-box
 
+// GLOBAL SCROLLBAR
+// All scrollable surfaces, including content and code blocks, follow the active color mode.
+html
+  scrollbar-color $color-text-secondary $color-background
+  scrollbar-width auto
+
+*
+  scrollbar-color $color-text-secondary $color-background
+  scrollbar-width auto
+
+  // &::-webkit-scrollbar
+  //   width 14px
+  //   height 14px
+
+  &::-webkit-scrollbar-track
+    background $color-background
+
+  &::-webkit-scrollbar-thumb
+    background $color-text-secondary
+    border 3px solid $color-background
+    border-radius 6px
+
+  &::-webkit-scrollbar-thumb:hover
+    background $color-text-primary
+
 a
   text-decoration: none
   color: $color-text-primary
