@@ -1,6 +1,6 @@
 ---
 title: CSES Python 400 全題解
-date: 2026-08-09 16:26:41
+date: 2026-08-20 17:00:23
 tags: CSES
 ---
 > 作者：暴力又被TLE
@@ -2140,6 +2140,8 @@ main()
 
 ### [Counting Tilings](https://cses.fi/problemset/task/2181)
 
+*WIP*
+
 ```python
 def main():
     from sys import stdin
@@ -2179,6 +2181,37 @@ main()
 
 ### [Counting Numbers](https://cses.fi/problemset/task/2220)
 
+典數位 DP。
+
+我的模板：
+
+```python
+n = ...
+num = tuple(map(int, str(n)))
+
+@cache
+def dfs(i: int = 0, data: Any = None,
+        is_lim: bool = True, start: int = -1,
+        debug: tuple[int] = ()) -> int:
+    if i == len(num): return 1
+    res = 0
+    lim = num[i] if is_lim else 9
+    for d in range(lim + 1):
+        new_data = ...(data, d)
+        new_is_lim = is_lim and d == lim
+        new_start = start + (start != -1 or d != 0)
+        new_debug = debug
+        # new_debug += (d,)  # for debugging
+        res += dfs(i + 1, new_data, new_is_lim, new_start, new_debug)
+    return res
+```
+
+`debug` 是為了在 debug 的時候，可以關掉記憶化，列出所有 `i == len(num)` 時候的數字。
+
+通常數位 DP 的複雜度都超好，而 Python 的 `@cache` 記憶化又超好寫，因此非常適合用 Python 唬爛。
+
+於是我就被 YTP 2026 決賽 p10 卡常了。
+
 ```python
 def main():
     from sys import stdin
@@ -2207,6 +2240,10 @@ main()
 ```
 
 ### [Increasing Subsequence II](https://cses.fi/problemset/task/1748)
+
+BIT 優化 DP 轉移。
+
+以下解法，一次 Sort、再對 index 做 BIT，比離散化的常數要小，是最佳實作。{% spoiler （但我用 C++ 搶的 Top Coder 又被 tsunnami 用 C 賴走） %}
 
 ```python
 def main():
@@ -2240,22 +2277,64 @@ main()
 
 ### [Counting Rooms](https://cses.fi/problemset/task/1192)
 
+這種計算連通塊的題目，我現在都偏好用 DSU 寫，而二維方格 index 先全部 map 到一維，再丟進 DSU 會比較好寫。
+
+啟發式合併的部分，將子樹大小取負放在根節點，就能只用單倍空間；至於 `find` 則有兩種寫法：
+
+第一種是最常見的遞迴式，比較好寫，尤其 C++ 甚至能一行，缺點是空間 $\mathcal{O}(\log_2 n)$（因為有啟發式合併），若是沒有啟發式合併則會變成 $\mathcal{O}(n)$，Python 可能就會 `RecursionError: maximum recursion depth exceeded`。
+
+第二種較不常見，叫做 Path Halving，顧名思義每次會將路徑長度減半，若是路徑為 $n$，他每次會減少 $n/2$ 的路徑長，因為 $\mathcal{O}(n/2) = \mathcal{O}(n)$，因此均攤複雜度仍是好的 $\mathcal{O}(\alpha(n))$，而他易於用 one pass、iterative 的迴圈實作，屬於**常數最小的最佳實作**，唯一缺點是碼量較前者稍多，而壓掉的常數根本~~比潮汐小~~。
+
+```cpp
+int find(int x) {  // full compression
+    return dsu[x] < 0 ? x : dsu[x] = find(dsu[x]);
+}
+
+int find(int x) {  // path halving
+    for (; dsu[x] >= 0; x = dsu[x]) if (dsu[dsu[x]] >= 0) dsu[x] = dsu[dsu[x]];
+    return x;
+}
+```
+
+```python
+def find(x):  # full compression
+    if dsu[x] < 0: return x
+    dsu[x] = find(dsu[x])
+    return dsu[x]
+
+def find(x):  # path halving
+    while dsu[x] >= 0:
+        if dsu[dsu[x]] >= 0:
+            dsu[x] = dsu[dsu[x]]
+        x = dsu[x]
+    return x
+
+def merge(a, b):
+    a, b = find(a), find(b)
+    if a == b: return False
+    if dsu[a] > dsu[b]: a, b = b, a
+    dsu[a] += dsu[b]
+    dsu[b] = a
+    return True
+```
+
+<br>
+
 ```python
 def main():
     from sys import stdin
     e = stdin.readline
 
     def find(x):
-        if dsu[x] < 0:
-            return x
+        if dsu[x] < 0: return x
         dsu[x] = find(dsu[x])
         return dsu[x]
 
-    def merge(a, b) -> bool:
+    def merge(a, b):
         a, b = find(a), find(b)
         if a == b: return False
-        if dsu[a] == dsu[b]: dsu[a] -= 1
-        elif dsu[a] > dsu[b]: a, b = b, a
+        if dsu[a] > dsu[b]: a, b = b, a
+        dsu[a] += dsu[b]
         dsu[b] = a
         return True
 
@@ -2275,7 +2354,26 @@ def main():
 main()
 ```
 
+如果你觀察力足夠好，會發現這解法有點假：`dsu[i] == 0` 代表該格是 `#`，但也有可能他其實是 `.`，且 DSU 父親是 `0` 啊？程式碼沒有處理後者這種情況，因為我們 `merge` 的順序，保證 `0` 節點不會成為任何人的父親（當然這種走鋼絲寫法絕不推薦在賽中使用w）。
+
 ### [Labyrinth](https://cses.fi/problemset/task/1193)
+
+邊權為 1 的單源最短路，使用普通 BFS 即可。
+
+以下寫法是壓平成一維，對於 PyPy 來講能快很多，但我賽中不會這麼寫。
+
+四方向遍歷，我現在的寫法一律是：
+
+```python
+d = (0, 1, 0, -1)
+bfs = [(si, sj)]
+for i, j in bfs:
+    for di in range(4):
+        ni, nj = i + d[di], j + d[di ^ 1]
+        bfs.append((ni, nj))
+```
+
+`[0, 1, 0, -1]` 這個構造非常好，各種方向的反射邏輯都可以藉由對 `di` 做位元運算推算，像是上下、左右的反射就是 `di ^ 2`，碼量超少又很帥，是我一直在傳教的實作小技巧。
 
 ```python
 def main():
@@ -2328,22 +2426,23 @@ main()
 
 ### [Building Roads](https://cses.fi/problemset/task/1666)
 
+找出所有連通塊後，隨便抓一個連向剩下所有人即可。
+
 ```python
 def main():
     from sys import stdin
     e = stdin.readline
 
     def find(x):
-        if dsu[x] < 0:
-            return x
+        if dsu[x] < 0: return x
         dsu[x] = find(dsu[x])
         return dsu[x]
 
     def merge(a, b):
         a, b = find(a), find(b)
         if a == b: return False
-        if dsu[a] == dsu[b]: dsu[a] -= 1
-        elif dsu[a] > dsu[b]: a, b = b, a
+        if dsu[a] > dsu[b]: a, b = b, a
+        dsu[a] += dsu[b]
         dsu[b] = a
         return True
 
@@ -2361,6 +2460,10 @@ main()
 ```
 
 ### [Message Route](https://cses.fi/problemset/task/1667)
+
+邊權為 1 的單源最短路，使用普通 BFS 即可。
+
+每個點需要紀錄前一個點（`pre`），因為要構造路徑。
 
 ```python
 def main():
@@ -2403,6 +2506,10 @@ main()
 
 ### [Building Teams](https://cses.fi/problemset/task/1668)
 
+二分圖染色判定，一樣 BFS 即可。
+
+這種題目感覺很多人都喜歡用 DFS，但 Python DFS 就是會 `RecursionError: maximum recursion depth exceeded`，所以我從小養成了 BFS 的好習慣。
+
 ```python
 def main():
     from sys import stdin
@@ -2439,6 +2546,10 @@ main()
 ```
 
 ### [Round Trip](https://cses.fi/problemset/task/1669)
+
+無向圖上，找任意一個環。~~很做作地寫成了迭代式。~~
+
+這解法會對，是因為**無向圖的 DFS 樹上沒有交叉邊**，非樹邊一定是後向邊，因此構造答案的時候，只需要一直跳父節點即可。
 
 ```python
 def main():
@@ -2486,6 +2597,8 @@ main()
 ```
 
 ### [Monsters](https://cses.fi/problemset/task/1194)
+
+[Labyrinth](#labyrinth) 的加強版：多源 BFS，把單格子的狀態編碼好即可。
 
 ```python
 def main():
@@ -2551,6 +2664,11 @@ main()
 
 ### [Shortest Routes I](https://cses.fi/problemset/task/1671)
 
+裸 Dijkstra。
+
+Python 的 heap 是 min-heap，優秀。 \
+C++ 的 heap 是 max-heap，拉完了。
+
 ```python
 def main():
     from sys import stdin
@@ -2577,11 +2695,14 @@ def main():
             dis[j] = nv
             heappush(q, (nv, j))
     print(*dis)
-
 main()
 ```
 
 ### [Shortest Routes II](https://cses.fi/problemset/task/1672)
+
+裸 Floyd-Warshall。
+
+記得鬆弛時，枚舉中介點的迴圈 `k` 在最外層。
 
 ```python
 def main():
@@ -2612,6 +2733,10 @@ def main():
     print("\n".join(map(str, ans)))
 main()
 ```
+
+推類題：
+- [SPOJ - 351 . 慘字道路規劃](https://tioj.sprout.tw/problems/351)，考點：{% spoiler Floyd-Warshall 可以 $\mathcal{O}(n ^ 2)$ 加點 %}
+- [The 3rd Universal Cup. Stage 24: Poland - B. Baggage](https://qoj.ac/contest/1890/problem/9960)
 
 ### [High Score](https://cses.fi/problemset/task/1673)
 
