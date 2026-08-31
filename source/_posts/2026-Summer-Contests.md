@@ -102,13 +102,365 @@ for c in A[:題目數量]:
 
 ## 開板
 
-成大賽的開板很得。
-
-*WIP*
+成大賽的開板很得，是用一隻 AI 進行 RPG，每完成一個關卡就公布一個隊名。但一直被 mocha 越獄，發現他是~~自我認同為 Claude~~ 的 Deepseek，超級好笑。
 
 # YTP 初賽（7/7）
 
-*WIP*
+AI 相較於去年變強太多，已經可以單刷破台這種比賽了，因此超級無敵混亂。
+
+~~因為沒有螢幕錄影，我顯然不記得做題順序，所以按照題號講。~~
+
+## 題目
+
+[YTP 2026 題單](https://oj.ntucpc.org/problems/tag/ytp2026)
+
+**p1**
+
+隨便 `bisect` 一下就好了，C++ 應該 $\mathcal{O}(n \cdot q) \approx 10 ^ 7$ 也能過。
+
+```python
+def main():
+    from sys import stdin
+    from bisect import bisect_left
+    e = stdin.readline
+
+    n, q = map(int, e().split())
+    rs = [10**20] * (n + 1)
+    l = [0] * (n + 1)
+    for i in range(n):
+        rs[i], l[i] = map(int, e().split())
+        rs[i] **= 2
+    for _ in range(q):
+        x, y = map(int, e().split())
+        r = x*x + y*y
+        print(l[bisect_left(rs, r)])
+main()
+```
+
+**p2**
+
+看了很多眼題目敘述，還是不太確定在講甚麼，結果圖片很重要。
+
+打表了一下就做掉了，我是從小到大枚舉答案，因為答案是 $\sqrt{x}$ 量級，但其實可以直接 $\lfloor\sqrt{\frac{x}{\gcd(2036, 4581)}}\rfloor$，因為二次式只有 $x ^ 2$ 項，沒有 $x$ 和常數項。
+
+```python
+from math import isqrt
+print(isqrt(int(input()) // 509))
+```
+
+順帶一提，Python 的 `isqrt(x)` 是**純整數運算**（可以去研究一下他的實作，很快很厲害），而 `floor(x ** 0.5)` 是浮點數運算，又慢又有精度誤差。
+
+**p3**
+
+很純的數學題，把表打一打就會過了，但我也忘記賽中怎麼了，不太會讀題目 ><，總之我們沒做出這題。
+
+以下實作是 $\mathcal{O}(n \ln n + d(n) \log_2 m + \log_2 998244353)$，Python 穩過，應該是最佳解。
+
+```python
+def f(n, m, p, q):
+    mod = 998244353
+    fac = [0] * (n + 1)
+    for i in range(1, n + 1):
+        for j in range(i, n + 1, i): fac[j] += 1
+    d = max(fac) + 1
+    g = [0] * d
+    invn = pow(n, -1, mod)
+    for v in range(1, d):
+        g[v] = (1 - pow(1 - v * invn, m, mod)) % mod
+    return p * pow(q, -1, mod) * sum(g[v] for v in fac if v) % mod
+```
+
+**p4**
+
+賽中沒碰。
+
+邏輯很單純、實作小多的題。因為每次推只是一行的事，所以從 $6$ 個方向把每一行都掃過一遍就好。
+
+實作上可以設計一台狀態機（以下 `white`, `black`, `cnt` 的部分），就能每次丟進去一個字元（`add`）即可；六邊形遍歷的部分，只要把戳出去的部分好好判掉，就能暴力亂戳，不用嚴格戳在六邊形裡面，實作上簡便許多。
+
+需要注意，因為六邊形輸入格式的關係，斜向遍歷的時候上半和下半移動斜率不一樣，需要公式調整。
+
+```cpp
+const int N = 100;
+char l[N << 1][N << 1];
+
+void solve() {
+    int n; cin in n;
+    int m = n * 2 - 1;
+    #define lim(i) (m - abs((i) - (n-1)))
+    #define inr(i, j) (0 <= (i) and (i) < m and 0 <= (j) and (j) < lim(i))
+    REP(i, 0, m) REP(j, 0, lim(i)) cin in l[i][j];
+
+    int ans = 0;
+    bool white = 0, black = 0;
+    int cnt = 0;
+
+    auto add = [&](int i, int j) {
+        char c = inr(i, j) ? l[i][j] : '.';
+        if (c == '.') {
+            white = black = cnt = 0;
+        } else if (c == 'B') {
+            black = 1;
+            ans += --cnt < 0 and white;
+        } else if (black) {
+            white = 0;
+        } else {
+            white = 1;
+            ++cnt;
+        }
+    };
+    REP(i, 0, m) {
+        REP(j, -1, lim(i)) add(i, j);
+        for (int j = lim(i); j >= 0; --j) add(i, j);
+    }
+    REP(j, -n, m) {
+        REP(k, -1, m) add(k, j + min(k, n-1));
+        REP(k, -1, m) add(k, j + min(k, n-1) - k);
+        for (int k = m; k >= 0; --k) add(k, j + min(k, n-1));
+        for (int k = m; k >= 0; --k) add(k, j + min(k, n-1) - k);
+    }
+    cout ot ans nl;
+}
+```
+
+**p5**
+
+賽中楊寬洋自己把它做掉了。
+
+很典的方格捷徑 DP。
+
+```cpp
+const int N = 1e5, mod = 998244353;
+using st = array<int, 2>;
+st dp[N];
+
+void solve() {
+    int m, n; cin in m in n;
+    dp[0][0] = 1;
+    REP(i, 0, m) {
+        st le{};
+        REP(j, 0, n) {
+            char c; cin in c;
+            st up = dp[j];
+            REP(k, 0, 2) dp[j][k ^ (c == '#')] = (le[k] + up[k]) % mod;
+            le = dp[j];
+        }
+    }
+    cout ot dp[n-1][1] nl;
+}
+```
+
+**p6**
+
+賽中沒碰。
+
+看到範圍 $n \le 100. k \le 10 ^ 9$，顯然是矩陣快速冪。
+
+把轉移矩陣構造出來，就做完了，算是很板的題。
+
+```cpp
+const int N = 100, mod = 998244353;
+template <size_t m, size_t n>
+using mat = array<array<ll, n>, m>;
+
+template <size_t p, size_t q, size_t r>
+mat<p, r> operator*(const mat<p, q> &a, const mat<q, r> &b) {
+    mat<p, r> c{};
+    REP(i, 0, p) REP(k, 0, q) REP(j, 0, r) {
+        (c[i][j] += a[i][k] * b[k][j]) %= mod;
+    }
+    return c;
+}
+
+void solve() {
+    int n, k, s, t; cin in n in k in s in t; --s;
+    mat<1, N> l{};
+    REP(i, 0, n) cin in l[0][i];
+    mat<N, N> tt{};
+    REP(i, 0, n) {
+        if (i-1 >= 0) ++tt[i][i-1], --tt[i][i];
+        tt[i][i] += n-1;
+        if (i+1 <  n) ++tt[i][i+1], --tt[i][i];
+    }
+    for (; k; k >>= 1) {
+        if (k & 1) l = l * tt;
+        tt = tt * tt;
+    }
+    cout ot (accumulate(&l[0][s], &l[0][t], 0LL) % mod) nl;
+}
+```
+
+**p7**
+
+封板後做掉。很卡常的題目，糟糕。
+
+因為會被卡常，所以避免使用 `set`、`map`。
+
+以下解法直接在斜角上做，也可以將點 $(x, y)$ 變成 $(x + y, x - y)$，然後直著做，此時 $d$ 要變成 $2d$。
+
+為了省事，可以只算一個方向，並旋轉後再做一次。
+
+小心運算 `x + y - d` 之類的範圍時會 overflow，因此將 `d` 設成 `long long` 可以保證此運算時隱式轉型、不溢出。
+
+```cpp
+const int N = 1e6;
+
+struct pp {
+    int x, y;
+    int add() {
+        return x + y;
+    }
+    int sub() {
+        return x - y;
+    }
+} l[N];
+int sl[N], cnt[N + 1], p[N];
+
+void solve() {
+    int n; ll d; cin in n in d;
+    REP(i, 0, n) cin in l[i].x in l[i].y;
+    ll ans = 0;
+    auto f = [&]() {
+        REP(i, 0, n) sl[i] = l[i].add();
+        sort(sl, sl + n); int m = unique(sl, sl + n) - sl;
+        auto mp = [&](int x) {
+            return lower_bound(sl, sl + m, x) - sl;
+        };
+        fill(cnt, cnt + m + 1, 0);
+        REP(i, 0, n) ++cnt[mp(l[i].add())];
+        REP(i, 0, m) cnt[i+1] += cnt[i];
+        REP(i, 0, n) p[--cnt[mp(l[i].add())]] = i;
+        int gj = 0;
+        REP(gi, 0, m) {
+            int s = cnt[gi], t = cnt[gi + 1];
+            sort(p + s, p + t, [&](int a, int b) {
+                return l[a].sub() < l[b].sub();
+            });
+            while (l[p[cnt[gj]]].add() < l[p[cnt[gi]]].add() - d) ++gj;
+            if (l[p[cnt[gj]]].add() == l[p[cnt[gi]]].add() - d) {
+                int ss = cnt[gj], tt = ss;
+                REP(i, s, t) {
+                    while (ss < cnt[gj+1] and l[p[ss]].sub() < l[p[i]].sub() - d) ++ss;
+                    while (tt < cnt[gj+1] and l[p[tt]].sub() < l[p[i]].sub() + d) ++tt;
+                    ans += tt - ss;
+                }
+            }
+        }
+    };
+    REP(r, 0, 2) {
+        f();
+        REP(i, 0, n) swap(l[i].x, l[i].y), l[i].y *= -1;
+    }
+    cout ot ans nl;
+}
+```
+
+**p8**
+
+布丁出的非常好題目，[CSES. New Roads Queries](https://cses.fi/problemset/task/2101/) 的小包裝。
+
+先多源 BFS 算出每個點的加入時間，然後就可以用啟發式合併 DSU 建一顆卡巴楚拉重構樹，就能在線詢問了。
+
+此解法實作簡單常數又小，值得學。
+
+也可以砸 $\mathcal{O}(n) - \mathcal{O}(1)$ LCA，那整體就只帶 DSU 的一個 $\alpha$ 了。
+
+```cpp
+const int N = 1e5, lim = N + 2;
+
+vec<int> G[N];
+vec<int> dead[lim];
+
+int dsu[N], siz[N];
+int l[N];
+int deadt[N];
+bool vis[N];
+
+vec<int> add[lim + 1];
+
+void merge(int a, int b, int v) {
+    while (dsu[a] >= 0) a = dsu[a];
+    while (dsu[b] >= 0) b = dsu[b];
+    if (a != b) {
+        if (siz[a] < siz[b]) swap(a, b);
+        siz[a] += siz[b];
+        dsu[b] = a;
+        l[b] = v;
+    }
+}
+
+int query(int a, int b) {
+    int res = lim;
+    while (a != b) {
+        if (siz[a] < siz[b]) swap(a, b);
+        if (dsu[b] < 0) {
+            res = -1;
+            break;
+        }
+        res = min(res, l[b]);
+        b = dsu[b];
+    }
+    return res;
+}
+
+void solve() {
+    int n, m, k, q;
+    cin in n in m in k in q;
+    fill(dsu, dsu + n, -1);
+    fill(siz, siz + n, 1);
+    fill(l, l + n, lim);
+    fill(deadt, deadt + n, lim);
+    REP(ei, 0, m) {
+        int a, b; cin in a in b; --a, --b;
+        G[a].emplace_back(b);
+        G[b].emplace_back(a);
+    }
+    while (k--) {
+        int i, t; cin in i in t; --i;
+        dead[t].emplace_back(i);
+    }
+    REP(t, 0, lim) {
+        for (int i: dead[t]) if (deadt[i] >= t) {
+            deadt[i] = t;
+            for (int j: G[i]) if (deadt[j] > t + 1) {
+                deadt[j] = t + 1;
+                dead[t + 1].emplace_back(j);
+            }
+        }
+    }
+    REP(i, 0, n) add[deadt[i]].emplace_back(i);
+
+    for (int t = lim; t >= 0; --t) {
+        for (int i: add[t]) {
+            vis[i] = 1;
+            for (int j: G[i]) if (vis[j]) {
+                merge(i, j, t - 1);
+            }
+        }
+    }
+    while (q--) {
+        int a, b; cin in a in b; --a, --b;
+        int res = query(a, b);
+        cout ot (res < lim - 1 ? res : -164253) nl;
+    }
+}
+```
+
+**表揚布丁很會出題**
+
+<img src="puddingorz.png" style="width: 80%; height: auto; vertical-align: top;" alt="布丁 Orz">
+
+**譴責餘切亂砸怪科技**
+
+<img src="cotnailcare.png" style="width: 50%; height: auto; vertical-align: top;" alt="餘切💅">
+
+## 破台被 DQ
+
+<img src="ipigorz.png" style="width: 50%; height: auto; vertical-align: top;" alt="iPig 教我破台">
+
+<img src="noscoreboardwtf.png" style="width: 75%; height: auto; vertical-align: top; margin-top: 20px;" alt="記分板不見了">
+
+這場真的超級怪。
 
 # NTUCPCPC 初賽（7/26）
 
