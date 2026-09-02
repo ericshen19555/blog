@@ -8,6 +8,24 @@ code
 
 .highlight
     margin 0 0 $margin-m-2 0
+    // Keep the code surface and its horizontal scrollbar in the same theme color.
+    background-color $color-code-background
+    scrollbar-color $color-text-secondary $color-code-background
+
+    &::-webkit-scrollbar-track
+        background $color-code-background
+
+    &::-webkit-scrollbar-thumb
+        border-color $color-code-background
+
+    pre
+        scrollbar-color $color-text-secondary $color-code-background
+
+        &::-webkit-scrollbar-track
+            background $color-code-background
+
+        &::-webkit-scrollbar-thumb
+            border-color $color-code-background
 
     .line
         width $margin-l-2
