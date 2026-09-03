@@ -1,0 +1,16 @@
+.post-content
+  summary
+    cursor: pointer;
+    &.border
+      border: 1px solid;
+      border-radius: 5px;
+      border-color: $color-text-secondary;
+      padding: 5px 10px 5px 10px;
+      margin-bottom: 10px;
+      background-color: $color-text-fourth;
+
+      transition: all 0.2s ease-in-out;
+
+      &:hover
+        border-color: $color-text-third;
+        transform: translateY(-1px);
