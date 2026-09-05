@@ -25,17 +25,17 @@ tags: contest
 ## 艱困地取隊名
 
 <div style="text-align: left;">
-  <img src="naming01.png" style="width: 48%; height: auto; vertical-align: top;" alt="取隊名">
-  <img src="naming02.png" style="width: 48%; height: auto; vertical-align: top;" alt="取隊名">
+  {% cimg src=naming01.png w=48% alt="取隊名" %}
+  {% cimg src=naming02.png w=48% alt="取隊名" %}
 </div>
 
 <div style="text-align: left; margin-top: 30px;">
-  <img src="naming03.png" style="width: 48%; height: auto; vertical-align: top;" alt="取隊名">
-  <img src="naming04.png" style="width: 48%; height: auto; vertical-align: top;" alt="取隊名">
+  {% cimg src=naming03.png w=48% alt="取隊名" %}
+  {% cimg src=naming04.png w=48% alt="取隊名" %}
 </div>
 
 <div style="text-align: left; margin-top: 30px;">
-  <img src="naming05.png" style="width: 48%; height: auto; vertical-align: top;" alt="取隊名">
+  {% cimg src=naming05.png w=48% alt="取隊名" %}
 </div>
 
 花很久時間取了個非常隨便的隊名w
@@ -43,8 +43,8 @@ tags: contest
 ## 順利(?)地取隊名
 
 <div style="text-align: left; margin-top: 30px;">
-  <img src="naming06.png" style="width: 48%; height: auto; vertical-align: top;" alt="取隊名">
-  <img src="naming07.png" style="width: 48%; height: auto; vertical-align: top;" alt="取隊名">
+  {% cimg src=naming06.png w=48% alt="取隊名" %}
+  {% cimg src=naming07.png w=48% alt="取隊名" %}
 </div>
 
 「一個人實作那其他兩個是不是 vibecoding」是因為我基本上負責整場實作，而 max 和 mocha 則是負責看題目、精神出解，然後告訴我解法。
@@ -488,17 +488,17 @@ void solve() {
 
 **表揚布丁很會出題**
 
-<img src="puddingorz.png" style="width: 80%; height: auto; vertical-align: top;" alt="布丁 Orz">
+{% cimg src=puddingorz.png w=80% alt="布丁 Orz" %}
 
 **譴責餘切亂砸怪科技**
 
-<img src="cotnailcare.png" style="width: 50%; height: auto; vertical-align: top;" alt="餘切💅">
+{% cimg src=cotnailcare.png w=50% alt="餘切💅" %}
 
 ## 破台被 DQ
 
-<img src="ipigorz.png" style="width: 50%; height: auto; vertical-align: top;" alt="iPig 教我破台">
+{% cimg src=ipigorz.png w=50% alt="iPig 教我破台" %}
 
-<img src="noscoreboardwtf.png" style="width: 75%; height: auto; vertical-align: top; margin-top: 20px;" alt="記分板不見了">
+{% cimg src=noscoreboardwtf.png w=75% alt="記分板不見了" mt=20px %}
 
 這場真的超級怪。
 
@@ -1210,7 +1210,7 @@ void solve() {
 
 ## 涓涓慘遭 DQ
 
-<img src="juanjuandqed.png" style="width: 60%; height: auto; vertical-align: top;" alt="涓涓慘遭 DQ">
+{% cimg src=juanjuandqed.png w=60% alt="涓涓慘遭 DQ" %}
 
 由涓涓論述的 `Bejaminshih` 戰績：
 
@@ -1356,7 +1356,7 @@ int main(){
 
 他堅持註解是寫給隊友看的，方便團隊溝通。
 
-<img src="veryfastgcd.png" style="width: 80%; height: auto; vertical-align: top;" alt="歐幾里得最大公因數（極速版）">
+{% cimg src=veryfastgcd.png w=80% alt="歐幾里得最大公因數（極速版）" %}
 
 `nathanlee726` 問了：
 
@@ -1379,7 +1379,7 @@ int main(){
 
 ## 其他有趣的 Code
 
-可以下載 [NTUCPCPC 2026 初賽程式碼](https://drive.google.com/file/d/1AQdrWnLxaz6nb_M9gbLzJ916vQmiNzDk/view?usp=sharing) 自己探索w
+可以下載 [NTUCPCPC 2026 初賽程式碼](https://drive.google.com/file/d/1AQdrWnLxaz6nb_M9gbLzJ916vQmiNzDk/view?usp=sharing) 自己探索w。
 
 `team02 - 是💅` 是 IOI 2026 國手隊，他們的 code 特別💅。
 `team07 - 侯欣緯隨便打都世界冠軍` 是 EGOI 2026 國手隊，裡面有很多 `wiwiho` ww。
