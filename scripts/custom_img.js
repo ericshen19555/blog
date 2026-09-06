@@ -8,5 +8,5 @@ hexo.extend.tag.register('cimg', function(args) {
     return ''; 
   }
 
-  return `<img src="${src}" style="width: ${width}; height: auto; vertical-align: top; margin-top: ${marginTop};" alt="${alt}">`;
+  return `<img src="${src}" style="width: ${width}; height: auto; vertical-align: top; margin-top: ${marginTop};" alt="${alt}"; title="${alt}">`;
 });
