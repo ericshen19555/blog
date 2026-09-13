@@ -1,6 +1,6 @@
 ---
 title: 2026 暑假的團體賽
-date: 2026-09-06 15:11:08
+date: 2026-09-13 17:43:15
 tags: contest
 ---
 
@@ -90,7 +90,9 @@ for c in A[:題目數量]:
 
 拿著紙本題本跟隊友精神了一下，我開始寫 pH，這題只要 Sort 再 $\mathcal{O}(n)$ 掃描就能做掉，而很恐怖的是我們弄這題弄了超過一個小時。我砸了 BIT 還一直精神怪怪的，還好羊~~看不下去了~~，觀察了一個很好的性質，但區間邊界的 case 還是一直怪怪的，送了 n 發、排列組合各種 edge case 的情況以後終於 AC。結論是他左開右閉，根本沒定義清楚，完全傻爆眼。此時 rk.2，依舊是贏在手速。
 
-接下來是 pG，分段的矩陣快速冪優化 DP。~~我因為太久沒碰矩陣快速冪，所以忘記怎麼寫矩陣乘法，被羊嗆{% spoiler （這是伏筆） %}。~~ 測範測不太對，一陣亂湊亂湊以後終於對了，傳上去 TLE，何意味啊？結果是我太依賴 Python 大數，有個地方偷懶少 mod，然後就燒了。第二發 AC，此時 rk.3。
+<span id="idk-how-to-mat-mul"></span>
+
+接下來是 pG，分段的矩陣快速冪優化 DP。~~我因為太久沒碰矩陣快速冪，所以忘記怎麼寫矩陣乘法，被羊嗆~~{% spoiler （這是[伏筆](#fuked-up-cuz-idk-how-to-mat-mul)） %}。 測範測不太對，一陣亂湊亂湊以後終於對了，傳上去 TLE，何意味啊？結果是我太依賴 Python 大數，有個地方偷懶少 mod，然後就燒了。第二發 AC，此時 rk.3。
 
 剩三題。因為 B 很快有人首殺，但很多人 WA，但不管先猜 B 的構造很水，結果猜錯，我們也成為 WA 的很多人。
 
@@ -1407,7 +1409,670 @@ YTP 和 NTUCPCPC 的決賽就在隔天，因此跟 YTP 申請來回交通補助�
 
 因為 IOAI 國手 sheep 還有 mocha 都是今天要搭飛機，所以他們只能打半場，下午兩點就要離開。
 
+感覺我們這場三個人的狀態都奇差無比，sheep 說最近一直在搞 AI，已經很久沒寫程式了，楊寬洋~~狗叫說自己早就退役~~，我自己，不知道為啥。
+
+[YTP 2026 題單](https://oj.ntucpc.org/problems/tag/ytp2026)
+
+**p1**
+
+很白癡的是我們到最後還是只有拿 4 分子題，完全沙比。
+
+因為 $n, m \le 100$，所以 C++ 甚至可以 $\mathcal{O}((h_1 + h_2) \cdot (n + m)) \approx 10 ^ 7$。
+
+<details>
+  <summary class="border">Solution Code</summary>
+
+Python 的 $\mathcal{O}((h_1 + h_2) \log_2 (n + m))$ 寫起來就這樣而已：
+
+`heapq.merge` 可以把多個 sorted 的 iterable 合併為一個大的 sorted 的 iterator，重點是他可以接收 lazy 的 iterator 所以很棒。
+因為 Python 的一些 Lazy 取值機制，需要套一層 `lambda` 再用一些不太 readable 的奇怪語法ww（當然可以寫得可讀但這樣比較簡潔），這是為了控制取值的時機。
+
+```python
+def main():
+    from sys import stdin
+    from heapq import merge
+    from itertools import count
+    e = stdin.readline
+
+    lim = 101
+    x, y = map(int, e().split())
+    a = [0] * lim
+    b = [0] * lim
+    for _ in range(int(e())):
+        d, c = map(int, e().split())
+        a[c] += d
+    for _ in range(int(e())):
+        d, c = map(int, e().split())
+        b[c] += d
+    q = merge(*[(lambda c=c, d=d: ((c * t << 1 | 0, d) for t in count(1)))() for c, d in enumerate(a) if d],
+              *[(lambda c=c, d=d: ((c * t << 1 | 1, d) for t in count(1)))() for c, d in enumerate(b) if d])
+    for t, d in q:
+        if t & 1 == 0:
+            y -= d
+            if y <= 0: return print(1)
+        else:
+            x -= d
+            if x <= 0: return print(2)
+main()
+```
+
+C++ 鴨腸的 Code，用 `__adjust_heap` 這個用於維護 heap 的底層操作，等於是做了 Python 的 `heapq.replace`，操作次數比 `pop_heap` + `push_heap` 還要少。
+
+```cpp
+const int N = 100, lim = N + 1;
+int a[lim], b[lim];
+struct item {
+    int t, c;
+    bool operator<(const item &o) const {
+        return t > o.t;
+    }
+} q[N << 1];
+
+void solve() {
+    M(a, 0), M(b, 0);
+    int x, y; cin in x in y;
+    int n;
+    for (cin in n; n--; ) {
+        int c, d; cin in d in c;
+        a[c] += d;
+    }
+    for (cin in n; n--; ) {
+        int c, d; cin in d in c;
+        b[c] += d;
+    }
+    int m = 0;
+    REP(c, 1, lim) if (a[c]) q[m++] = {c << 1 | 0, c};
+    REP(c, 1, lim) if (b[c]) q[m++] = {c << 1 | 1, c};
+    make_heap(q, q + m);
+    while (true) {
+        auto &[t, c] = q[0];
+        if ((t & 1) == 0) {
+            if ((y -= a[c]) <= 0) {
+                cout ot 1 nl;
+                return;
+            }
+        } else {
+            if ((x -= b[c]) <= 0) {
+                cout ot 2 nl;
+                return;
+            }
+        }
+        t += c << 1;
+        __adjust_heap(q, 0, m, move(q[0]), __gnu_cxx::__ops::__iter_less_iter());
+    }
+}
+```
+
+</details>
+
+**p2**
+
+不知道為何非常不會閱讀，所以也做了超久。這不都是簽到嗎？我們到底在幹嘛？
+
+> 求 $L \sim R$ 中，「因數數量為奇質數」的數字數量。
+
+首先因數數量要是奇數，則必為完全平方數，篩到 $\sqrt{n}$ 量級了。
+
+接下來可以不觀察直接照做，把 $x$ 質因數分解，會這樣算因數數量則也易於推出 $x ^ 2$ 的因數數量。
+
+<details>
+  <summary class="border">Solution Code</summary>
+
+```cpp
+const int N = 1e6 + 1;
+int spf[N];
+
+void solve() {
+    REP(i, 2, N) if (not spf[i]) {
+        for (int j = i; j < N; j += i) if (not spf[j]) spf[j] = i;
+    }
+    ll lo, hi; cin in lo in hi;
+    int ans = 0;
+    REP(i, 1, N) {
+        ll x = i, xx = x * x;
+        if (lo <= xx and xx <= hi) {
+            int d = 1, cnt = 0;
+            int pp = spf[x];
+            while (x != 1) {
+                int p = spf[x];
+                if (p != pp) {
+                    d *= cnt * 2 + 1;
+                    cnt = 0;
+                }
+                ++cnt;
+                x /= p;
+                pp = p;
+            }
+            d *= cnt * 2 + 1;
+            if (d != 2 and spf[d] == d) ++ans;
+        }
+    }
+    cout ot ans nl;
+}
+```
+
+</details>
+
+然後可以稍微觀察一下，發現只有當 **$x$ 的質因數只有一種**的時候，$x ^ 2$ 的因數數量才有可能是質數，乾脆直接枚舉 $x ^ 2 = p ^ {q-1}$，其中 $p, q$ 是質數，此時 $x ^ 2$ 的因數數量就是 $q$。
+
+<details>
+  <summary class="border">Solution Code</summary>
+
+```python
+lim = 10**6 + 1
+sieve = [True] * lim
+sieve[0] = sieve[1] = False
+ps = []
+for i in range(2, lim):
+    if not sieve[i]: continue
+    ps.append(i)
+    for j in range(i * i, lim, i):
+        sieve[j] = False
+lo, hi = map(int, input().split())
+ans = 0
+for p in ps:
+    for q in ps:
+        if q == 2: continue
+        x = pow(p, q - 1)
+        if x < lo: continue
+        if x > hi: break
+        ans += 1
+print(ans)
+```
+
+</details>
+
+或者你再觀察到答案總共只有 $78711$ 個，於是直接打表。
+
+**p3**
+
+拉完啦，誰愛做誰做ww。
+
+**p4**
+
+易於亂砸 Rolling Hash。
+
+但也有 $\mathcal{O}(m + n)$ 的確定性解，用 KMP 就好了。
+
+<details>
+  <summary class="border">Solution Code</summary>
+
+對較短的建 KMP，再掃一次另一個，最後在 KMP 上跳，就能找出所有前綴 $=$ 後綴的長度。
+最後雙指標配對。
+
+```cpp
+const int N = 1e6;
+int lps[N];
+
+vec<int> f(const string &a, const string &b) {
+    int m = a.size(), n = b.size();
+    for (int i = 1, j = 0; i < m; ++i) {
+        while (j and a[j] != a[i]) j = lps[j - 1];
+        j += a[j] == a[i];
+        lps[i] = j;
+    }
+    int j = 0;
+    for (int i = 1; i < n; ++i) {
+        while (j and a[j] != b[i]) j = lps[j - 1];
+        j += a[j] == b[i];
+        if (j == m) j = lps[j - 1];
+    }
+    vec<int> ret;
+    while (j) {
+        ret.emplace_back(j);
+        j = lps[j - 1];
+    }
+    ret.emplace_back(0);
+    return ret;
+}
+
+void solve() {
+    string a, b; cin in a in b;
+    if (a.size() > b.size()) swap(a, b);
+    int m = a.size(), n = b.size();
+    auto sa = f(a, b);
+    reverse(all(a)), reverse(all(b));
+    auto pa = f(a, b);
+    reverse(all(pa));
+    int ans = 0;
+    int j = 0;
+    REP(i, 0, sa.size()) {
+        while (j + 1 < pa.size() and sa[i] + pa[j + 1] <= m) ++j;
+        if (sa[i] + pa[j] <= m) {
+            ans = max(ans, sa[i] + pa[j]);
+        }
+    }
+    cout ot ans nl;
+}
+```
+
+</details>
+
+**p5**
+
+稍微需要觀察的樹題，賽中完全沒碰。
+
+想一下條件一，會發現 $p_{1 \sim n}$ 屬於此樹的一條 DFS 後序遍歷，且條件二的算式為 $2(n-1) - \text{某一條鏈}$，選直徑則能達到條件二的最小化要求，但這還不夠，要確保 DFS 到的最後一個點（此指前序的最後一個點）是直徑的另一個端點，DFS 時要優先把**非直徑上的點**走完。
+
+<details>
+  <summary class="border">Solution Code</summary>
+
+以下的 `dfs` 用 `ond`（是否在直徑上）保證不會回頭走。
+
+```cpp
+const int N = 2e5;
+vec<int> G[N];
+int pa[N];
+
+void dfs(int i, int p, bool ond = 1) {
+    if (i == -1) return;
+    for (int j: G[i]) if (j != p and j != pa[i]) dfs(j, i, 0);
+    cout ot i+1 se;
+    if (ond) dfs(pa[i], i, 1);
+}
+
+void solve() {
+    int n; cin in n;
+    REP(i, 0, n) G[i].clear();
+    REP(i, 1, n) {
+        int a, b; cin in a in b; --a, --b;
+        G[a].emplace_back(b);
+        G[b].emplace_back(a);
+    }
+    queue<int> q;
+    int i = 0;
+    q.emplace(i);
+    pa[i] = -1;
+    while (q.size()) {
+        i = q.front(); q.pop();
+        for (int j: G[i]) if (j != pa[i]) {
+            pa[j] = i;
+            q.emplace(j);
+        }
+    }
+    q.emplace(i);
+    pa[i] = -1;
+    while (q.size()) {
+        i = q.front(); q.pop();
+        for (int j: G[i]) if (j != pa[i]) {
+            pa[j] = i;
+            q.emplace(j);
+        }
+    }
+    dfs(i, -1);
+    cout nl;
+}
+```
+
+</details>
+
+**p6**
+
+一眼對答案二分搜 + 0-1 最短路。
+
+以下程式碼是 $\mathcal{O}(m \log_2 (m + n))$，直接在 sorted 的邊權上二分搜。
+
+<details>
+  <summary class="border">Solution Code</summary>
+
+```cpp
+const int N = 2e5, inf = 1e9;
+using pii = pair<int, int>;
+int dis[N];
+bool vis[N];
+vec<pii> G[N];
+int ew[N + 2];
+
+void solve() {
+    int n, m, k; cin in n in m in k;
+    REP(i, 0, n) G[i].clear();
+    REP(i, 0, m) {
+        int a, b, w; cin in a in b in w; --a, --b;
+        G[a].emplace_back(b, w);
+        G[b].emplace_back(a, w);
+        ew[i] = w;
+    }
+    ew[m++] = 0;
+    sort(ew, ew + m), m = unique(ew, ew + m) - ew;
+    int lo = 0, hi = m;
+    while (lo < hi) {
+        int mid = lo + hi >> 1;
+        M(dis, 0x3f), M(vis, 0);
+        deque<int> q = {0};
+        dis[0] = 0;
+        while (q.size()) {
+            int i = q.front(); q.pop_front();
+            if (vis[i]) continue;
+            vis[i] = 1;
+            for (auto [j, w]: G[i]) {
+                int add = w > ew[mid], nv = dis[i] + add;
+                if (nv < dis[j]) {
+                    dis[j] = nv;
+                    if (add == 0) q.emplace_front(j);
+                    else          q.emplace_back(j);
+                }
+            }
+        }
+        if (dis[n-1] > k) lo = mid + 1;
+        else              hi = mid;
+    }
+    cout ot (lo < m ? ew[lo] : -1) nl;
+}
+```
+
+</details>
+
+**p7**
+
+我賽中一直以為自己會，結果完全精神錯方向。
+最後又因為以為自己能寫完 p9，時間決策直接大燒雞，連 $n, m \le 2000$ 的子題都沒撈。
+
+其實就是 $\mathcal{O}(m + |\text{LCS}| \times (n + m))$ 的 DP，`dp[x = 0~100][i = 0~n-1] = j (0~m-1)` 表示 $|\text{LCS}| = x$ 時，使 $\text{LCS}$ 以 $a[i] = b[j]$ 結尾的**最小 $j$**，**最小**是貪心來的，這很顯然。
+
+發現轉移順序很好，易於把 $x$ 這層直接壓掉，連滾動都不用。而最佳轉移點則可以取前一層的前綴 $mn = \min dp[x-1][\dots]$，再**均攤**（這部分均攤起來是 $\mathcal{O}(m)$）找合法的最小 $mn < j$ 使 $a[i] = b[j]$，看 code 應該比較好理解。
+
+<details>
+  <summary class="border">Solution Code</summary>
+
+```cpp
+const int N = 5e5 + 1, A = 101;
+int l[N], dp[N], it[N];
+vec<int> pos[N];
+
+void solve() {
+    // REP(v, 0, N) pos[v].clear();
+    int n, m; cin in n in m;
+    REP(i, 0, n) cin in l[i];
+    REP(i, 0, m) {
+        int v; cin in v;
+        pos[v].emplace_back(i);
+    }
+    int mn = -1;
+    REP(ans, 0, A) {
+        REP(v, 0, N) it[v] = pos[v].size();
+        bool happy = 0;
+        REP(i, 0, n) {
+            int v = l[i];
+            auto &p = pos[v];
+            while (it[v] and p[it[v] - 1] > mn) --it[v];
+            mn = min(mn, dp[i]);
+            dp[i] = it[v] < p.size() ? p[it[v]] : m;
+            if (dp[i] < m) happy = 1;
+        }
+        if (not happy) {
+            cout ot ans nl;
+            return;
+        }
+        mn = m;
+    }
+}
+```
+
+</details>
+
+**p8**
+
+很典的題。
+
+因為 $a_i > 1$，因此在**最小值相同**的情況下，顯然區間取得越大越好。
+就對於每個 $b_i$，兩次單調棧算出左右 $<$ 自己的第一個人，就知道區間了。
+
+<details>
+  <summary class="border">Solution Code</summary>
+
+```cpp
+const int N = 5e5;
+ll a[N + 1];
+int b[N], le[N], ri[N];
+
+void solve() {
+    int n; cin in n;
+    REP(i, 0, n) cin in a[i+1];
+    REP(i, 0, n) cin in b[i];
+    REP(i, 0, n) a[i+1] += a[i];
+    stack<int> stk;
+    REP(i, 0, n) {
+        while (stk.size() and b[stk.top()] >= b[i]) stk.pop();
+        le[i] = stk.size() ? stk.top() + 1 : 0;
+        stk.emplace(i);
+    }
+    stk = {};
+    for (int i = n; i--; ) {
+        while (stk.size() and b[stk.top()] >= b[i]) stk.pop();
+        ri[i] = stk.size() ? stk.top() : n;
+        stk.emplace(i);
+    }
+    ll ans = 0;
+    REP(i, 0, n) ans = max(ans, (a[ri[i]] - a[le[i]]) * b[i]);
+    cout ot ans nl;
+}
+```
+
+</details>
+
+<span id="fuked-up-cuz-idk-how-to-mat-mul"></span>
+
+**p9**
+
+看範圍一眼就是矩陣快速冪，然而因為前面埋的 [伏筆](#idk-how-to-mat-mul)，我忘記要怎麼構造矩陣了，羊又已經去坐飛機了，楊寬洋正在嘗試拿子題，我獨自燒雞。最後沒寫出來，完全沙比。
+
+<details>
+  <summary class="border">Solution Code</summary>
+
+```cpp
+const int N = 200, mod = 1e9 + 7;
+using pii = pair<int, int>;
+template <size_t m, size_t n>
+using mat = array<array<ll, n>, m>;
+
+template <size_t p, size_t q, size_t r>
+mat<p, r> operator*(const mat<p, q> &a, const mat<q, r> &b) {
+    mat<p, r> c{};
+    REP(i, 0, p) REP(k, 0, q) REP(j, 0, r) (c[i][j] += a[i][k] * b[k][j]) %= mod;
+    return c;
+}
+
+int deg[N];
+pii es[N];
+
+ll inv(ll x) {
+    ll res = 1;
+    for (int n = mod - 2; n; n >>= 1) {
+        if (n & 1) (res *= x) %= mod;
+        (x *= x) %= mod;
+    }
+    return res;
+}
+
+void solve() {
+    int n, m, s, t; ll k; cin in n in m in s in t in k; --s, --t;
+    mat<1, N> dp{};
+    REP(i, 0, m) {
+        int a, b; cin in a in b; --a, --b;
+        ++deg[a], ++deg[b];
+        es[i << 1 | 0] = {a, b};
+        es[i << 1 | 1] = {b, a};
+    }
+    m <<= 1;
+    ll x = inv(deg[s]);
+    REP(i, 0, m) {
+        auto [a, b] = es[i];
+        if (a == s) dp[0][i] = x;
+    }
+    if (--k) {
+        mat<N, N> tt{};
+        REP(i, 0, m) {
+            auto [a, b] = es[i];
+            ll x = inv(deg[b] - 1);
+            REP(j, 0, m) if (j != i) {
+                auto [c, d] = es[j];
+                if (b == c and a != d) tt[i][j] = x;
+            }
+        }
+        for (; k; k >>= 1) {
+            if (k & 1) dp = dp * tt;
+            tt = tt * tt;
+        }
+    }
+    ll ans = 0;
+    REP(i, 0, m) {
+        auto [a, b] = es[i];
+        if (b == t) (ans += dp[0][i]) %= mod;
+    }
+    cout ot ans nl;
+}
+```
+
+</details>
+
+**p10**
+
+很有趣的一題數位 DP，我賽中有寫出來，但 Python 被卡常，來不及改成 C++。好題但視解法而定可能需要鴨腸。
+
+這題主要麻煩的點是 $10 ^ {18}$ 很大，就算只能用 $2, 3, 5, 7$ 四個質因數，考慮 worst case 的話，$\lfloor \log_2 10 ^ {18} \rfloor \times \lfloor \log_3 10 ^ {18} \rfloor \times \lfloor \log_5 10 ^ {18} \rfloor \times \lfloor \log_7 10 ^ {18} \rfloor = 1,146,075$ 十分炸裂。然而實際上根本不可能達到這個 worst case，最厲害的 $M = 846879183360000000 = 2 ^ {15} \cdot 3 ^ 9 \cdot 5 ^ 7 \cdot 7 ^ 5$，因數數量 $7680$。
+
+賽中可以直接猜因數數量足夠小（brinton 說的），然後好好設計 Hash Function，就能過了。
+
+<details>
+  <summary class="border">Solution Code</summary>
+
+以下實作中，因為 `islim = 1` 的 case 具有唯一性，所以不需要 `memo`；而 `z` 只有在 `start` 的時候可能為真，所以這樣寫是 OK 的。
+
+```cpp
+const int N = 20;
+using a4 = array<int, 4>;
+int n, num[N];
+string s; ll m;
+
+a4 ps = {2, 3, 5, 7}, add[10], cntm;
+vec<ll> memo;
+
+a4 pf(ll &x) {
+    a4 c{};
+    REP(pi, 0, 4) for (int p = ps[pi]; x % p == 0; x /= p) ++c[pi];
+    return c;
+}
+
+a4 operator+(const a4 &a, const a4 &b) {
+    a4 c{};
+    REP(i, 0, 4) c[i] = min(a[i] + b[i], cntm[i]);
+    return c;
+}
+
+int key(int i, int start, int z, const a4 &cur) {
+    int x = i * 3 + start + z;
+    REP(i, 0, 4) x *= cntm[i] + 1, x += cur[i];
+    return x;
+}
+
+ll dp(int i = 0, bool start = 0, bool islim = 1, bool z = 0, const a4 &cur = {}) {
+    if (i == n) {
+        if (not start) return 0;
+        return z or m == 1 and cur == cntm;
+    }
+    int k;
+    if (not islim and ~memo[k = key(i, start, z, cur)]) return memo[k];
+    ll res = 0;
+    int lim = islim ? num[i] : 9;
+    REP(d, 0, lim + 1) {
+        res += dp(i + 1, start or d, islim and d == lim, z or start and not d, cur + add[d]);
+    }
+    if (not islim) memo[k] = res;
+    return res;
+}
+
+int main() {
+    IO;
+    REP(d, 1, 10) {
+        ll x = d;
+        add[d] = pf(x);
+    }
+    int t; cin in t;
+    while (t--) {
+        cin in s in m;
+        n = s.size();
+        REP(i, 0, n) num[i] = s[i] ^ '0';
+        cntm = pf(m);
+        if (m != 1) cntm = {};
+        memo.assign(key(n, 0, 0, {}), -1);
+        cout ot dp() nl;
+    }
+    return 0;
+}
+```
+
+</details>
+
+**p11**
+
+很白癡的是，這題**在比賽開始前幾分鐘**修改了 $n$ 範圍（我忘記有沒有改時限記憶體了），再加上這題雖然是第 11 題，但英文名稱是 `5D Chess`，造成了好幾組燒雞：
+- 修改範圍的 announcement 是在比賽開始前，有人以為他只是 general 的賽前公告就沒看。
+- 因為 `5`，所以以為改範圍的是 p5，然後 C-Style Array 開錯大小。
+- 因為 `D`，所以以為改範圍的是 p4，然後完全想不通為何要改範圍。
+
+五維偏序問題，但若是用 CDQ 分治又難寫、常數又大。$n \le 10 ^ 5$ 足夠小，因此可以考慮 $\mathcal{O}(\frac{n ^ 2}{64})$ 的 `bitset` 解法。
+
+對五個維度分別排序後，易於雙指標掃描出與當前維度與自己差 $\le k$ 的人，用 `bitset` 把五個維度的結果 `&` 到一起就好了。
+
+餘切的記憶體用量超少，不知道是什麼解。
+
+<details>
+  <summary class="border">Solution Code</summary>
+
+```cpp
+const int N = 1e5;
+using bb = bitset<N>;
+int l[5][N], sl[N];
+bb bs[N], cur;
+
+void solve() {
+    int n; ll k; cin in n in k;
+    REP(i, 0, n) REP(r, 0, 5) cin in l[r][i];
+    REP(i, 0, n) bs[i].set();
+    REP(r, 0, 5) {
+        iota(sl, sl + n, 0);
+        sort(sl, sl + n, [&](int a, int b) {
+            return l[r][a] < l[r][b];
+        });
+        cur.reset();
+        int si = 0, sj = 0;
+        REP(x, 0, n) {
+            int i = sl[x];
+            while (si < x and l[r][sl[si]] + k <  l[r][i]) cur[sl[si++]] = 0;
+            while (sj < n and l[r][sl[sj]] - k <= l[r][i]) cur[sl[sj++]] = 1;
+            bs[i] &= cur;
+        }
+    }
+    ll ans = 0;
+    REP(i, 0, n) ans += bs[i].count();
+    cout ot (ans - n) / 2 nl;
+}
+```
+
+</details>
+
+後面的題目~~賽中根本都沒碰~~，等我哪天心情好再補。
+
 *WIP*
+
+<!-- 
+**p**
+
+<details>
+  <summary class="border">Solution Code</summary>
+
+```cpp
+code
+```
+
+</details>
+ -->
+
+## 狗針藏分
+
+唐狗針、林宥辰、宋睿軒一組，但宋睿軒要考微積分先修期中考所以沒比 YTP 決賽（我也有報先修，但選擇翹掉期中考，因為聽說通過率低得可憐，而且我想見大家 \:D）。
+
+重點是他們兩個直接開始大藏分，用子題驗正確性，在那邊 `if n >= 2000: print("YTP")`，封板以後直接衝上去，有夠扯的。
 
 ## 賽後
 
