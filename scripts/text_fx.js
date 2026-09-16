@@ -1,6 +1,6 @@
 const FX_CONFIG = {
   flame: { emoji: '🔥', x: 16, y: 4 },
-  holy: { emoji: '🛐', x: 0, y: 0 }
+  holy: { emoji: '🛐', x: 8, y: 8 }
 };
 
 function parseOptions(args) {
