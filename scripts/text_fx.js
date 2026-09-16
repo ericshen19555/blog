@@ -47,6 +47,7 @@ hexo.extend.tag.register('fx', function(args, content) {
   const escapedText = escapeHtml(text);
   const cursor = getEmojiCursor(config.emoji, config.x, config.y);
   const sizeStyle = size ? ` font-size: ${escapeHtml(size)};` : '';
+  const defaultLayout = ` margin-block: 1.5rem;`;
 
-  return `<p class="fx-text fx-${escapedType}" data-text="${escapedText}" style="--fx-cursor: ${cursor};${sizeStyle}">${escapedText}</p>`;
+  return `<p class="fx-text fx-${escapedType}" data-text="${escapedText}" style="--fx-cursor: ${cursor};${sizeStyle}${defaultLayout}">${escapedText}</p>`;
 }, { ends: true });
