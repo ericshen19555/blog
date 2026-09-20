@@ -1,6 +1,6 @@
 ---
 title: 2026 暑假的團體賽
-date: 2026-09-13 17:43:15
+date: 2026-09-20 15:22:09
 tags: contest
 ---
 
@@ -102,7 +102,7 @@ for c in A[:題目數量]:
 
 而 pE 則是很典的用 heap 依序取前 $k$ 小，應該要戳這題的。賽後我很快用 Python 寫掉，但 TLE，因為~~布丁信誓旦旦說 Python 不會被卡常然而完全被卡死。~~
 
-## 開板
+## [開板](https://rank.kzzz.idv.tw/s/2026-hspc-%E5%88%9D%E8%B3%BD)
 
 成大賽的開板很得，是用一隻 AI 進行 RPG，每完成一個關卡就公布一個隊名。但一直被 mocha 越獄，發現他是~~自我認同為 Claude~~ 的 Deepseek，超級好笑。
 
@@ -1383,7 +1383,7 @@ int main(){
 
 可以下載 [NTUCPCPC 2026 初賽程式碼](https://drive.google.com/file/d/1AQdrWnLxaz6nb_M9gbLzJ916vQmiNzDk/view?usp=sharing) 自己探索w。
 
-`team02 - 是💅` 是 IOI 2026 國手隊，他們的 code 特別💅。
+`team02 - 是💅` 是 IOI 2026 國手隊，他們的 code 特別:nail_care:。
 `team07 - 侯欣緯隨便打都世界冠軍` 是 $\frac{2}{3}$ EGOI 2026 國手隊，裡面有很多 `wiwiho` ww。（已應吳沛神要求將「EGOI 2026 國手隊」更名為「$\frac{2}{3}$ EGOI 2026 國手隊」）
 
 ## [板子](https://rank.kzzz.idv.tw/s/2026-ntucpc-pre)
@@ -1810,6 +1810,8 @@ void solve() {
 
 </details>
 
+<span id="YTP-p8"></span>
+
 **p8**
 
 很典的題。
@@ -2070,6 +2072,8 @@ code
 
 ## 狗針藏分
 
+[封板](https://sorahisa-rank.github.io/ytp/26-S2/frozen/ranking/)、[開板](https://sorahisa-rank.github.io/ytp/26-S2/ranking/)
+
 唐狗針、林宥辰、宋睿軒一組，但宋睿軒要考微積分先修期中考所以沒比 YTP 決賽（我也有報先修，但選擇翹掉期中考，因為聽說通過率低得可憐，而且我想見大家 \:D）。
 
 重點是他們兩個直接開始大藏分，用子題驗正確性，在那邊 `if n >= 2000: print("YTP")`，封板以後直接衝上去，有夠扯的。
@@ -2103,16 +2107,780 @@ code
 
 稍盤，但不錯吃，有吃飽。
 
-然後是走去 IOI 國手四個人一起訂的飯店，在上去之前他們還去逛了*肌膚露出比例較高*的二次元店{% spoiler （甚至有 18+ 區） %}，leolin 買了一件*十分有尺度*的 T-shirt，~~說是要當成 IOI 隊服~~。我就**默默地低著頭**繞了一圈又一圈（因為裡面冷氣好涼），唐狗針則早就開溜去買飲料。
+然後是走去 IOI 國手四個人一起訂的飯店，在上去之前他們還去逛了*肌膚露出比例較高*的二次元店{% spoiler （甚至有 18+ 區） %}，leolin 買了[一件*十分有尺度*的 T-shirt（附圖左側）](https://drive.google.com/file/d/14c-cvMBMeB11iBHrGobAyCak0-kwOcxI/view)，~~說是要當成 IOI 隊服~~。我就**默默地低著頭**繞了一圈又一圈（因為裡面冷氣好涼），唐狗針則早就開溜去買飲料。
 
 四位 IOI 國手團訂的飯店房間好大，還真塞得下我們十幾個人。玩 BOTC，但我不太清楚規則，完全處在一個 drunk 的狀態（是這樣用的嗎w），只知道原本以為我的角色很廢，結果提供的資訊意外地多？大家一起推演邏輯超級有那麼一回事的。Brinton 作為上帝出了幾個小包，眾人一致認同 Koukirocks 當天神時都不出差錯很厲害。
 
 然後就是去北車拿行李，回飯店。再出來去便利商店買個顆粒燕麥飲，好喝。
 飯店超陽春，但反正只是要洗澡 + 睡一晚，沒差啦w。
 
+{% cimg src=oatdrink.png w=50% alt="跟狗針去便利商店覓食走回飯店的時候" %}
+
 # NTUCPCPC 決賽（8/2）
 
+令人並不特別有食慾的飯店早餐。
+
+## 賽前
+
+在北捷跟 leolin 合照。
+
+{% cimg src=leolin.png w=80% alt="在北捷跟 leolin 合照" %}
+
+NTUCPCPC 的禮物超多。（閃動格子資料夾是我的模板啦）
+
+{% cimg src=NTUCPCPCgifts.png w=80% alt="紀念品" %}
+
+還收到了很可愛的:sun_with_face:束口袋，心情好好 \:D。
+
+## 賽中
+
+因為 mocha 去 IOAI 了，我和 max 兩個人打。
+
+{% fx type=flame size=60px %}
+劣勢要貪！
+{% endfx %}
+
+[NTUCPCPC 2026 題單](https://oj.ntucpc.org/problems/tag/ntucpcpc-2026)
+
+[NTUCPCPC 2026 決賽題解](https://hackmd.io/@alvingogo/r1RhDvREMg)
+
+**pA**
+
+**超好題，超推。**
+
+這題很幹地沒給 grader，根本沒辦法測試；把這題做掉的 cot 是自己寫了本地測試，實作能力和決心都十分強。
+
+max 在後半場努力想做掉這題，但一直 WA，原本以為是很難測試所以實作爛了，結果他最後發現解本身也假假的，然後就沒時間做其他題了:pensive:。
+
+因為給的是完全圖，顯然 prim 是最適合的，但若是每次取「生成樹集合外最近點」時都線性掃描的話，比較次數會燒雞。
+題目保證「邊權隨機」，因此某點最短距離被更新的次數期望上僅為 $\ln n$ 次，為了善用此性質，於是改用**線段樹**來維護最近點（單點修改、查詢全局最小值），單點修改變成 $\mathcal{O}(\log_2 n)$ 次比較、查詢最近點則 $\mathcal{O}(0)$ 直接看根節點；總修改次數 $\times$ 單點修改 $=$ 總比較次數 $\mathcal{O}(n \ln n \log_2 n)$。
+而輪數限制的部分，因為 prim 加入新的一點後，會同時考慮剩餘的所有節點，可能會單點修改很多點，而向上 pull up 維護線段樹時，同一層的節點可以平行比較、不受影響，因此把同一層在同一輪內問完即可。
+
+實作上，開成完美二元樹的 ZKW 非常適合這題。
+
+{% fx type=holy size=60px %}
+信 ZKW 得永生
+{% endfx %}
+
+（其實只要開成完美二元樹，遞迴式線段樹和 ZKW 的樹完全同構，但遞迴式要「同層一起做」的話難寫很多。）
+
+<details>
+  <summary class="border">Solution Code</summary>
+
+需要小心，不能 `Ask({})`，我因為這個吃了兩個 WA。
+
+```cpp
+const int n = 1000, m = 1024;
+
+int main() {
+    cin.tie(0)->sync_with_stdio(0);
+    Init();
+    vec<pii> ans; ans.reserve(n - 1);
+    vec<pii> zkw(m << 1, {-1, -1});
+    vec<bool> tag(m << 1);
+    vec<pii> qs; qs.reserve(n * 2);
+    vec<int> qi; qi.reserve(n);
+    vec<int> cur, nxt; cur.reserve(n), nxt.reserve(n);
+    auto toxic1based = [&](const pii &e) {
+        auto &[a, b] = e;
+        return pii{a+1, b+1};
+    };
+    auto done = [&](int i) {
+        return zkw[i] == pii{-1, -1};
+    };
+    auto cmp = [&](int a, int b) {
+        if (done(a)) return b;
+        if (done(b)) return a;
+        return 0;
+    };
+    auto update = [&](int i, const pii &x) {
+        if (x != zkw[i]) {
+            zkw[i] = x;
+            if (not tag[i >> 1]) {
+                tag[i >> 1] = 1;
+                nxt.emplace_back(i >> 1);
+            }
+            return 1;
+        }
+        return 0;
+    };
+    auto pull = [&]() {
+        for (int b = m; b >>= 1; ) {
+            swap(cur, nxt);
+            if (cur.empty()) break;  // not more tag
+            for (int i: cur) {
+                tag[i] = 0;
+                int ls = i << 1, rs = ls | 1;
+                int x = cmp(ls, rs);
+                if (x) update(i, zkw[x]);
+                else {  // need query
+                    qi.emplace_back(i);
+                    qs.emplace_back(toxic1based(zkw[ls]));
+                    qs.emplace_back(toxic1based(zkw[rs]));
+                }
+            }
+            cur.clear();
+            if (qi.empty()) continue;  // no query
+            string res = Ask(move(qs));
+            REP(qii, 0, qi.size()) {
+                int i = qi[qii];
+                auto &x = zkw[i << 1 | (res[qii] == '>')];
+                update(i, x);
+            }
+            qs.clear(), qi.clear();
+        }
+    };
+    tag[0] = 1;
+    update(m + 0, {-1, -1});
+    REP(i, 1, n) update(m + i, {0, i});
+    pull();
+    REP(r, 1, n) {
+        ans.emplace_back(toxic1based(zkw[1]));
+        int i = zkw[1].second;
+        update(m + i, {-1, -1});
+        REP(j, 0, n) if (not done(m + j)) {
+            qi.emplace_back(j);
+            qs.emplace_back(toxic1based(zkw[m + j]));
+            qs.emplace_back(toxic1based({i, j}));
+        }
+        if (qi.size()) {
+            string res = Ask(move(qs));
+            REP(qii, 0, qi.size()) {
+                if (res[qii] == '>') {
+                    int j = qi[qii];
+                    update(m + j, {i, j});
+                }
+            }
+            qs.clear(), qi.clear();
+        }
+        pull();
+    }
+    Answer(move(ans));
+    return 0;
+}
+```
+
+</details>
+
+這題原本是用 IO 做互動，搬上 NTUCPC 後改成函式互動。但 cot 的時間真的跟我差太多，完全不信：
+
+{% cimg src=whycotsofast.png w=80% alt="餘切黑魔法" %}
+
+結果是：
+
+<div style="text-align: left;">
+  {% cimg src=owoovo.png w=48% alt="喔 我菜了" %}
+  {% cimg src=fastio.png w=48% alt="IO 優化" %}
+</div>
+
+**pB**
+
+純科技題，但沒 AC，因為我不會離散化。
+
+{% cimg src=squirrel.jpg w=75% alt="飛天小松鼠" %}
+
+往右是 $x+$，叉叉表示樹。
+
+這題轉化起來還算輕鬆，不難觀察到只有這 $3$ 種路線（飛 $1, 2$ 次的情況也都有涵蓋到）。
+首先上下箭頭的範圍，就是求 $x$ 相同的情況下，$y$ 比自己小/大的第一個人，對 $x$ 分桶、各自排序後易求。
+至於往右的箭頭要怎麼找，則可以轉化為：看 $A, B$ 上下箭頭皆可達的某個 $y$ 區間（圖右側標示的三個區間）內，是否存在某 $y$，使得該 $y$ 橫軸上、$x \le B_x$ 的所有樹，其 $x$ 皆 $\lt A_x$。
+白話來說就是，對所有 $y$ 維護 $x \le B_x$ 的最大 $x$，對那 $3$ 個 $y$ 區間詢問 $\min x$ 是否 $\lt A_x$。
+所以就是離線以後，對 $x$ 做掃描線，線段樹維護區間 $\min$，掃描到 $B$ 時處理詢問。
+然後把所有 $x, y$ 翻轉再做一次，就能考慮到箭頭往 $y+$ 貫通的 case 了。
+
+有夠難敘述的，讀者自行體會（毫無責任感ww）。
+
+而離散化上還有需要注意的地方，要好寫的話最好把所有樹和詢問都加入，而還要**把每棵樹旁邊的格子也加入**，不然若是兩顆樹實際離很遠，但中間沒有其他物件，只離散化他們的話，他們中間原本存在的大片空白就消失在離散化後的座標軸上了。我賽中就是沒考慮到這點，看到題解簡報才~~悔不當初~~。
+
+<details>
+  <summary class="border">Solution Code</summary>
+
+```cpp
+const int N = 3e5, M = N * 4 + 4, inf = 1e9 + 1;
+struct pp {
+    int x, y;
+} l[N];
+struct qq {
+    int a, b, c, d;
+} oqs[N];
+int xs[M], ys[M], xc, yc;
+vec<int> pos[M], qs[M];
+int zkw[M << 1];
+bool ans[N];
+
+void add(int i, int v) {
+    for (zkw[i += yc] = v; i >>= 1; ) zkw[i] = min(zkw[i << 1], zkw[i << 1 | 1]);
+}
+
+int query(int s, int t) {
+    int res = xc - 1;
+    for (s += yc, t += yc; s < t; s >>= 1, t >>= 1) {
+        if (s & 1) res = min(res, zkw[s++]);
+        if (t & 1) res = min(res, zkw[--t]);
+    }
+    return res;
+}
+
+template <typename it>
+int mp(it s, it t, int v) {
+    return lower_bound(s, t, v) - s;
+}
+
+void pn(vec<int> &l, int v, int &p, int &n) {
+    int i = mp(all(l), v);
+    p = i ? l[i-1] : 0;
+    n = i < l.size() ? l[i] : yc - 1;
+}
+
+void solve() {
+    int n, q; cin in n in q;
+    xc = yc = 0;
+    xs[xc++] = -inf, xs[xc++] = -inf - 1, xs[xc++] = inf, xs[xc++] = inf + 1;
+    ys[yc++] = -inf, ys[yc++] = -inf - 1, ys[yc++] = inf, ys[yc++] = inf + 1;
+    REP(i, 0, n) {
+        auto &[x, y] = l[i];
+        cin in x in y;
+        xs[xc++] = x, xs[xc++] = x + 1;
+        ys[yc++] = y, ys[yc++] = y + 1;
+    }
+    REP(qi, 0, q) {
+        auto &[a, b, c, d] = oqs[qi];
+        cin in a in b in c in d;
+        xs[xc++] = a, ys[yc++] = b;
+        xs[xc++] = c, ys[yc++] = d;
+    }
+    sort(xs, xs + xc), xc = unique(xs, xs + xc) - xs;
+    sort(ys, ys + yc), yc = unique(ys, ys + yc) - ys;
+    REP(i, 0, n) {
+        auto &[x, y] = l[i];
+        x = mp(xs, xs + xc, x), y = mp(ys, ys + yc, y);
+    }
+    REP(qi, 0, q) {
+        auto &[a, b, c, d] = oqs[qi];
+        a = mp(xs, xs + xc, a), b = mp(ys, ys + yc, b);
+        c = mp(xs, xs + xc, c), d = mp(ys, ys + yc, d);
+    }
+    auto f = [&]() {
+        fill(zkw, zkw + yc * 2, 0);
+        REP(x, 0, xc) pos[x].clear(), qs[x].clear();
+        REP(i, 0, n) {
+            auto &[x, y] = l[i];
+            pos[x].emplace_back(y);
+        }
+        REP(qi, 0, q) {
+            auto &[a, b, c, d] = oqs[qi];
+            qs[max(a, c)].emplace_back(qi);
+        }
+        REP(x, 0, xc) {
+            sort(all(pos[x]));
+            for (int y: pos[x]) add(y, x);
+            for (int qi: qs[x]) {
+                auto [a, b, c, d] = oqs[qi];
+                int px = min(a, c);
+                if (b > d) swap(a, c), swap(b, d);
+                int pb, nb, pd, nd;
+                pn(pos[a], b, pb, nb), pn(pos[c], d, pd, nd);
+                ans[qi] = ans[qi] or query(max(pb, pd) + 1, b) < px;
+                ans[qi] = ans[qi] or query(max(b, pd + 1), min(nb, d)) < px;
+                ans[qi] = ans[qi] or query(d, min(nb, nd)) < px;
+            }
+        }
+    };
+    f();
+    swap(xs, ys), swap(xc, yc);
+    REP(i, 0, n) {
+        auto &[x, y] = l[i];
+        swap(x, y);
+    }
+    REP(qi, 0, q) {
+        auto &[a, b, c, d] = oqs[qi];
+        swap(a, b), swap(c, d);
+    }
+    f();
+    REP(qi, 0, q) cout ot (ans[qi] ? "Yes" : "No") nl;
+}
+```
+
+</details>
+
+**pC**
+
+純實作。一發過。
+
+<details>
+  <summary class="border">Solution Code</summary>
+
+```cpp
+const int N = 5000;
+
+int m, n;
+char l[N][N];
+int vis[N][N];
+const int d[4] = {0, 1, 0, -1};
+
+bool inr(int i, int j ){
+    return (0 <= i and i < m and 0 <= j and j < n);
+}
+
+#define BAD {cout ot "??" nl; return;}
+
+void solve() {
+    cin in m in n;
+    REP(i, 0, m) REP(j, 0, n) cin in l[i][j];
+    
+    REP(i, 0, m) {
+        REP(j, 0, n) {
+            char c = l[i][j];
+            if ('0' <= c and c <= '4') {
+                int cnt = 0;
+                REP(di, 0, 4) {
+                    int ni = i + d[di], nj = j + d[di ^ 1];
+                    if (inr(ni, nj)) {
+                        cnt += l[ni][nj] == '*';
+                    }
+                }
+                if (cnt != (c - '0')) {
+                    BAD;
+                }
+            }
+        }
+    }
+
+    M(vis, 0);
+    REP(i, 0, m) REP(j, 0, n) {
+        char c = l[i][j];
+        if (c == '*') {
+            REP(di, 0, 4) {
+                int ni = i + d[di], nj = j + d[di ^ 1];
+                int b = 1 << (di & 1);
+                while (inr(ni, nj)) {
+                    if (l[ni][nj] == '.') {
+                        if (vis[ni][nj] & b) BAD;
+                        vis[ni][nj] |= b;
+                    } else if (l[ni][nj] == '*') {
+                        BAD;
+                    } else break; // house
+                    ni = ni + d[di], nj = nj + d[di ^ 1];
+                }
+            }
+        }
+    }
+    REP(i, 0, m) REP(j, 0, n) {
+        char c = l[i][j];
+        if (c == '.') {
+            if (not vis[i][j]) BAD;
+        }
+    }
+    cout ot "!!" nl;
+}
+```
+
+</details>
+
+**pD**
+
+計幾，賽中看了就跳。但以馬後炮角度，應該要開這題而非 pA。
+
+我還沒補 (・∀・)。
+
 *WIP*
+
+**pE**
+
+~~我看完以為是甚麼 Boruvka~~。
+
+實際上，一直拿最大的人跟比他小的人合併即可，所以就是 $\text{sum} - \max$ 而已，巨梗。
+
+<details>
+  <summary class="border">Solution Code</summary>
+
+```python
+input()
+l = list(map(int, input().split()))
+print(sum(l) - max(l))
+```
+
+</details>
+
+**pF**
+
+滅台題。有生之年再學吧...
+
+*WIP*
+
+**pG**
+
+因為昨天才剛寫了 [YTP p8](#ytp-p8)，所以直接砸了一模一樣的解法，只是把對 $a$ 的前綴和改為 ZKW 區間 $\max$。
+
+而實際上這也是一題梗題，因為反過來想，對於每個 $a_i$，要最大化 $\min_{l \le j \le r} b_j$ 的話，就是僅選取 $i$ 一個位置，所以答案就是 $\max a_i \times b_i$。
+
+<details>
+  <summary class="border">Solution Code</summary>
+
+```python
+input()
+print(max(x * y for x, y in zip(map(int, input().split()), map(int, input().split()))))
+```
+
+</details>
+
+**pH**
+
+賽中沒有仔細觀察性質，就丟掉了。跟 pD 一樣，應該看板跟題的。
+
+可以觀察到兩人的路徑一定是「分、合、分」，因為若是「分、合、**分**、合、分」最中間合起來必然不會更差。
+
+先預處理出每個點與四個角落的路徑權重總和，再對於每個點算「兩個**合**在這點，且接下來**分**直到終點」的 DP 值，需要考慮前一步也**合**的情況，因此要小心規劃轉移順序，以免轉移出現環。
+
+以下陣列的編排方式十分 Cache friendly，可以比 naive 方法快很多，留讀者研究。
+
+<details>
+  <summary class="border">Solution Code</summary>
+
+```cpp
+const int N = 1e6;
+const ll inf = 0x3f3f3f3f'3f3f3f3f;
+
+#define idx(i, j) ((i)*n+(j))
+int l[N];
+ll dis[5][N], *dp = dis[4];
+
+int main() {
+    IO;
+    int m, n; cin in n in m;
+    REP(j, 0, n) REP(i, 0, m) cin in l[idx(i, j)];
+    dis[0][idx(0, 0)] = l[idx(0, 0)]; REP(j, 1, n) dis[0][idx(0, j)] = dis[0][idx(0, j-1)] + l[idx(0, j)];
+    dis[1][idx(0, n-1)] = l[idx(0, n-1)]; for (int j = n-1; j--; ) dis[1][idx(0, j)] = dis[1][idx(0, j+1)] + l[idx(0, j)];
+    dis[2][idx(m-1, 0)] = l[idx(m-1, 0)]; REP(j, 1, n) dis[2][idx(m-1, j)] = dis[2][idx(m-1, j-1)] + l[idx(m-1, j)];
+    dis[3][idx(m-1, n-1)] = l[idx(m-1, n-1)]; for (int j = n-1; j--; ) dis[3][idx(m-1, j)] = dis[3][idx(m-1, j+1)] + l[idx(m-1, j)];
+    ll px;
+    REP(i, 1, m) {
+        px = inf; REP(j, 0, n) px = dis[0][idx(i, j)] = min(dis[0][idx(i-1, j)], px) + l[idx(i, j)];
+        px = inf; for (int j = n; j--; ) px = dis[0][idx(i, j)] = min(dis[0][idx(i, j)], px + l[idx(i, j)]);
+        px = inf; REP(j, 0, n) px = dis[1][idx(i, j)] = min(dis[1][idx(i-1, j)], px) + l[idx(i, j)];
+        px = inf; for (int j = n; j--; ) px = dis[1][idx(i, j)] = min(dis[1][idx(i, j)], px + l[idx(i, j)]);
+    }
+    for (int i = m-1; i--; ) {
+        px = inf; REP(j, 0, n) px = dis[2][idx(i, j)] = min(dis[2][idx(i+1, j)], px) + l[idx(i, j)];
+        px = inf; for (int j = n; j--; ) px = dis[2][idx(i, j)] = min(dis[2][idx(i, j)], px + l[idx(i, j)]);
+        px = inf; REP(j, 0, n) px = dis[3][idx(i, j)] = min(dis[3][idx(i+1, j)], px) + l[idx(i, j)];
+        px = inf; for (int j = n; j--; ) px = dis[3][idx(i, j)] = min(dis[3][idx(i, j)], px + l[idx(i, j)]);
+    }
+    ll ans = dis[0][idx(m-1, 0)] + dis[1][idx(m-1, n-1)];
+    REP(i, 0, m) {
+        px = inf;
+        if (i) REP(j, 0, n) px = dp[idx(i, j)] = min({dp[idx(i-1, j)] + l[idx(i, j)], dis[0][idx(i, j)] + dis[1][idx(i, j)] - l[idx(i, j)], px + l[idx(i, j)]});
+        else   REP(j, 0, n) px = dp[idx(i, j)] = min(dis[0][idx(i, j)] + dis[1][idx(i, j)] - l[idx(i, j)], px + l[idx(i, j)]);
+        px = inf; for (int j = n; j--; ) px = dp[idx(i, j)] = min(dp[idx(i, j)], px + l[idx(i, j)]), ans = min(ans, px + dis[2][idx(i, j)] + dis[3][idx(i, j)] - l[idx(i, j)] * 2);
+    }
+    cout ot ans nl;
+    return 0;
+}
+```
+
+</details>
+
+## 賽後
+
+[NTUCPCPC 決賽板子](https://domjudge.ntucpc.org/public)
+
+<details>
+  <summary class="border">如果 judge 關了，這邊有截圖</summary>
+
+{% cimg src=NTUCPCPCranking.png w=100% alt="NTUCPCPC 決賽板子" %}
+
+</details>
+
+雖然有**高達 $12$ 隊**拿了金牌，但可惜只有 IOI 2026 國手隊報名成功 :pensive:。
+
+[NTUCPCPC 決賽照片](https://drive.google.com/drive/folders/1uzRsoirX9yoqx63HJ7KrYbHrmzgoz-78?usp=sharing)
+
+{% cimg src=NTUCPCPCall.jpg w=100% alt="NTUCPCPC 大合照" %}
+
+挑比較好看的一張了w，~~雖然這張我根本被遮一半ww~~。
+<small> *可惜沒有拍到更多合照。* </small>
+
+NTUCPCPC 的題解、頒獎完全是最有料的ww，能深刻感受到主辦的用心。
+
+{% cimg src=ruby.jpg w=80% alt="露比獎" %}
+{% cimg src=tiger.jpg w=80% alt="三人成虎獎" mt=1em %}
+
+「露比獎」單純是他們把所有 code 丟給 codex，然後叫他找出最「露比」的，何意味？
+
+<details>
+  <summary class="border">露比獎得主（沒離散化好的 pB WA code）</summary>
+
+```cpp
+// g++ -std=c++23 -Wall -pipe -g3 -O0 test.cpp -o test && { echo "[done]"; ./test; } || echo "[fail]"
+
+#include <bits/stdc++.h>
+using namespace std;
+#define IO cin.tie(0)->sync_with_stdio(0);
+#define R(x) istringstream stm(x); cin.rdbuf(stm.rdbuf());
+#define M(x, v) memset(x, v, sizeof(x))
+#define REP(i, s, t) for (int i = (s); i < (t); ++i)
+#define in >>
+#define ot <<
+#define se ot ' '
+#define sep se ot
+#define nl ot '\n'
+#define all(x) x.begin(), x.end()
+template <typename T>
+using vec = vector<T>;
+using ll = long long;
+void solve();
+string T = R"(1
+8 5
+4 4
+1 4
+2 2
+3 3
+4 1
+0 5
+2 5
+1 6
+1 2 2 4
+2 3 3 2
+4 6 4 2
+1 5 -1201 1201
+1 5 1 5)";
+
+int main() {
+    IO;
+    int t = 1;
+
+    // R(T);
+    // cin in t;
+
+    while (t--) solve();
+    return 0;
+}
+
+const int N = 1e6, M = 2e6;
+using pii = pair<int, int>;
+pii l[N];
+bool ans[N];
+struct qq {
+    int a, b, c, d;
+} oqs[N];
+
+vec<int> pos[M];
+vec<int> qs[M];
+int xs[M], ys[M];
+int zkw[M << 1];
+int m;
+
+void add(int i, int v) {
+    for (zkw[i += m] = v; i >>= 1; ) 
+        zkw[i] = min(zkw[i << 1], zkw[i << 1 | 1]);
+}
+
+int query(int s, int t) {
+    int res = 1e9 + 7;
+    for (s += m, t += m; s < t; s >>= 1, t >>= 1) {
+        if (s & 1) res = min(res, zkw[s++]);
+        if (t & 1) res = min(res, zkw[--t]);
+    }
+    return res;
+}
+
+void solve() {
+    M(ans, 0);
+    int n, q; cin in n in q;
+    REP(x, 0, n) {
+        auto &[i, j] = l[x];
+        cin in i in j;
+    }
+    REP(qi, 0, q) {
+        int a, b, c, d; cin in a in b in c in d;
+        oqs[qi] = {a, b, c, d};
+    }
+
+    #define mp(l, n, x) (int(lower_bound(l, l + n, x) - l))
+
+    auto leolin_love_cot = [&]() {
+        int xc = 0, yc = 0;
+        xs[xc++] = -1e9 - 6;
+        xs[xc++] = 1e9 + 6;
+        ys[yc++] = -1e9 - 6;
+        ys[yc++] = 1e9 + 6;
+        REP(x, 0, n) {
+            auto [i, j] = l[x];
+            xs[xc++] = i;
+            ys[yc++] = j;
+        }
+        REP(qi, 0, q) {
+            auto [a, b, c, d] = oqs[qi];
+            xs[xc++] = a;
+            xs[xc++] = c;
+            ys[yc++] = b;
+            ys[yc++] = d;
+        }
+        sort(xs, xs + xc), xc = unique(xs, xs + xc) - xs;
+        sort(ys, ys + yc), yc = unique(ys, ys + yc) - ys;
+
+        // sort i, U = {j}
+        m = yc;
+        REP(i, 0, M << 1) zkw[i] = -1e9 - 7;
+        REP(i, 0, M) pos[i].clear();
+        REP(i, 0, M) qs[i].clear();
+        REP(x, 0, n) {
+            auto [i, j] = l[x];
+            pos[mp(xs, xc, i)].push_back(j);
+            // // cout ot mp(xs, xc, i) sep j nl;
+        }
+        // // cout nl;
+        REP(qi, 0, q) {
+            auto [a, b, c, d] = oqs[qi];
+            qs[mp(xs, xc, max(a, c))].push_back(qi);
+        }
+        REP(i, 0, M) sort(all(pos[i]));
+
+        REP(i, 0, M) {
+            for (int j: pos[i]) {
+                // // cout ot "add" sep i sep j sep xs[i] nl;
+                add(mp(ys, yc, j), xs[i]);
+            }
+            for (int qi: qs[i]) {
+                auto [a, b, c, d] = oqs[qi];
+                // ans = min(s, t) < a
+                if (b > d) {
+                    swap(a, c);
+                    swap(b, d);
+                }
+                // b <= d
+                int s, t;
+                {
+                    auto &vv = pos[mp(xs, xc, c)];
+                    s = lower_bound(all(vv), d) - 1 - vv.begin();
+                    if (s >= 0) {
+                        s = mp(ys, yc, vv[s]) + 1;
+                    } else {
+                        s = 0;
+                    }
+                    s = max(s, mp(ys, yc, b));
+                }
+                {
+                    auto &vv = pos[mp(xs, xc, a)];
+                    t = lower_bound(all(vv), b) - vv.begin();
+                    if (t < vv.size()) {
+                        t = mp(ys, yc, vv[t]);
+                    } else {
+                        t = m;
+                    }
+                    t = min(t-1, mp(ys, yc, d)) + 1;
+                }
+                if (a > c) {
+                    swap(a, c);
+                    swap(b, d);
+                }
+                // a <= c, i == mp(c)
+                // // cout ot qi sep a sep b sep c sep d sep ys[s] sep ys[t-1] sep query(s, t) nl;
+                ans[qi] |= (s < t and query(s, t) < a);
+
+                if (b > d) {
+                    swap(a, c);
+                    swap(b, d);
+                }
+                {
+                    auto &vv = pos[mp(xs, xc, c)];
+                    s = mp(ys, yc, d);
+                    t = lower_bound(all(vv), d) - vv.begin();
+                    if (t < vv.size()) {
+                        t = mp(ys, yc, vv[t]);
+                    } else {
+                        t = m;
+                    }
+                }
+                {
+                    auto &vv = pos[mp(xs, xc, a)];
+                    int nt = (int)(lower_bound(all(vv), b) - vv.begin());
+                    if (nt < vv.size()) {
+                        nt = mp(ys, yc, vv[nt]);
+                    } else {
+                        nt = m;
+                    }
+                    t = min(t, nt);
+                }
+                if (a > c) {
+                    swap(a, c);
+                    swap(b, d);
+                }
+                // a <= c, i == mp(c)
+                // if (qi == 2) cout ot qi sep a sep b sep c sep d sep ys[s] sep ys[t-1] sep query(s, t) nl;
+                ans[qi] |= (s < t and query(s, t) < a);
+
+                if (b > d) {
+                    swap(a, c);
+                    swap(b, d);
+                }
+                {
+                    auto &vv = pos[mp(xs, xc, c)];
+                    s = lower_bound(all(vv), d) - 1 - vv.begin();
+                    if (s >= 0) {
+                        s = mp(ys, yc, vv[s]) + 1;
+                    } else {
+                        s = 0;
+                    }
+                }
+                {
+                    auto &vv = pos[mp(xs, xc, a)];
+                    t = mp(ys, yc, b) + 1;
+                    int ns = lower_bound(all(vv), b) - 1 - vv.begin();
+                    if (ns >= 0) {
+                        ns = mp(ys, yc, vv[ns]) + 1;
+                    } else {
+                        ns = 0;
+                    }
+                    s = max(s, ns);
+                }
+                if (a > c) {
+                    swap(a, c);
+                    swap(b, d);
+                }
+                // a <= c, i == mp(c)
+                // if (qi == 2) cout ot qi sep a sep b sep c sep d sep ys[s] sep ys[t-1] sep query(s, t) nl;
+                ans[qi] |= (s < t and query(s, t) < a);
+            }
+        }
+    };
+
+    leolin_love_cot();
+
+    REP(x, 0, n) {
+        auto &[i, j] = l[x];
+        swap(i, j);
+    }
+    REP(qi, 0, q) {
+        auto &[a, b, c, d] = oqs[qi];
+        swap(a, b), swap(c, d);
+    }
+
+    leolin_love_cot();
+
+    REP(qi, 0, q) {
+        cout ot (ans[qi] ? "Yes" : "No") nl;
+    }
+}  
+```
+
+</details>
+
+「三人成虎獎」則是非三人隊伍中的 rk.1，成功獻祭摩卡拿到高級背包ww。
+
+這場總而言之就是，劣勢想要貪 pA, pB，但沒貪出來 (・∀・\;\;)。
+
+{% cimg src=NTUCPCPCdinner.jpg w=65% alt=晚餐 %}
+
+一群人一起去吃了晚餐。忘記品名了。記得好像還不錯吃。
+
+而後就跟交通比較早的人分別了。
+
+然後跟 max、狗針和另一個我~~還是忘記了名字~~的人一起逛北車地下街，腳超酸。
+
+{% cimg src=wtfmeaning.jpg w=45% alt="一張意義不明的照片" %}
+
+最後再放一張意義不明的照片。
 
 # 成大賽決賽（8/14）
 
