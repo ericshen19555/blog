@@ -26,5 +26,10 @@
     "hexo-server": "^3.0.0",
     "hexo-spoiler": "^1.7.4",
     "hexo-theme-landscape": "^1.0.0"
+  },
+  "allowScripts": {
+    "hexo-util@3.3.0": true,
+    "hexo-util@2.7.0": true,
+    "hexo-util@4.0.0": true
   }
 }
