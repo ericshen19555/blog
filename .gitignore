@@ -9,6 +9,9 @@ public/
 .deploy*/
 _multiconfig.yml
 
+# Generated low-quality WebP companions for article images.
+*.preview.webp
+
 # Generated site output should not be committed to the source branch.
 /2026/
 /archives/
