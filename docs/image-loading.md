@@ -1,10 +1,12 @@
 # Article image loading
 
-Article images written with the `{% cimg %}` tag get a generated WebP preview beside the source image. Preview files use the `.preview.webp` suffix and are ignored by Git. The original image stays unchanged.
+Every image in a Hexo post asset folder gets a generated WebP preview beside the source image, whether or not the post currently references it with `{% cimg %}`. Preview files use the `.preview.webp` suffix and are ignored by Git. The original image stays unchanged.
 
-Hexo generates missing or stale previews before every generation. That same hook runs for `npm run build`, GitHub Pages deployment, and the first build and rebuilds performed by `npm run server`. While the local server is running, adding or updating a referenced source image causes Hexo to rebuild and create its preview automatically.
+Before each generation, the preview script walks Hexo's registered `PostAsset` records and creates previews for image assets whose preview is missing or older than the source. It also removes `.preview.webp` files under `source/_posts` when their matching original file no longer exists. Hexo registers post assets during source processing; the script writes preview files next to those assets, then its generator adds the corresponding routes to the output. This ordering works for `npm run build`, GitHub Pages deployment, and the first build and rebuilds performed by `npm run server`. While the local server is running, adding, updating, or removing a post image is reflected on the next generation.
 
 Previews use a 64-pixel maximum edge and WebP quality 45. The image frame uses the source image's oriented dimensions, so the preview and original occupy the same space while the original loads.
+
+The preview generation is asset-based rather than derived from rendered HTML. Hexo runs `after_post_render` while rendering posts inside `before_generate`, before generators execute, but newly written files do not automatically become `PostAsset` records because source processing has already registered assets. The current generator emits routes from existing `PostAsset` records, so previews are prepared before that generator runs.
 
 ## Animation and debug mode
 

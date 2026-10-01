@@ -2,62 +2,33 @@ const fs = require('node:fs/promises');
 const path = require('node:path');
 const sharp = require('sharp');
 
-const POSTS_DIR = path.join(hexo.source_dir, '_posts');
 const PREVIEW_SUFFIX = '.preview.webp';
-const IMAGE_REFERENCE = /\{%\s*cimg\s+([\s\S]*?)%\}/g;
-const SRC_OPTION = /(?:^|\s)src=(?:"([^"]+)"|'([^']+)'|([^\s]+))/;
+const CONCURRENCY = 3;
+const POSTS_DIR = path.join(hexo.source_dir, '_posts');
+let generatedImageAssets = [];
 
-async function listMarkdownFiles(directory) {
-  const entries = await fs.readdir(directory, { withFileTypes: true });
-  const nested = await Promise.all(entries.map(async entry => {
-    const entryPath = path.join(directory, entry.name);
-    if (entry.isDirectory()) return listMarkdownFiles(entryPath);
-    return entry.isFile() && entry.name.endsWith('.md') ? [entryPath] : [];
-  }));
-  return nested.flat();
-}
+async function isImage(sourcePath) {
+  if (sourcePath.endsWith(PREVIEW_SUFFIX)) return false;
 
-async function collectImageSources() {
-  const markdownFiles = await listMarkdownFiles(POSTS_DIR);
-  const imageSources = new Set();
-
-  for (const markdownPath of markdownFiles) {
-    const content = await fs.readFile(markdownPath, 'utf8');
-    const assetDir = path.join(path.dirname(markdownPath), path.basename(markdownPath, '.md'));
-    let tag;
-
-    while ((tag = IMAGE_REFERENCE.exec(content)) !== null) {
-      const srcMatch = SRC_OPTION.exec(tag[1]);
-      const src = srcMatch && (srcMatch[1] || srcMatch[2] || srcMatch[3]);
-      if (!src || path.isAbsolute(src)) continue;
-
-      const sourcePath = path.resolve(assetDir, src);
-      if (!sourcePath.startsWith(`${assetDir}${path.sep}`)) continue;
-      imageSources.add(sourcePath);
-    }
-    IMAGE_REFERENCE.lastIndex = 0;
-  }
-
-  return [...imageSources];
-}
-
-async function ensurePreview(sourcePath) {
-  const previewPath = `${sourcePath}${PREVIEW_SUFFIX}`;
-  let sourceStat;
   try {
-    sourceStat = await fs.stat(sourcePath);
-    if (!sourceStat.isFile()) return;
+    const metadata = await sharp(sourcePath).metadata();
+    return Boolean(metadata.format);
   } catch (error) {
-    if (error.code === 'ENOENT') {
-      console.warn(`[image previews] source image not found: ${sourcePath}`);
-      return;
-    }
+    // Post assets also include non-image files. Ignore those without masking
+    // unexpected filesystem or Sharp errors.
+    if (error.message?.includes('Input file contains unsupported image format')) return false;
     throw error;
   }
+}
+
+async function ensurePreview(asset) {
+  const sourcePath = asset.source;
+  const previewPath = `${sourcePath}${PREVIEW_SUFFIX}`;
+  const sourceStat = await fs.stat(sourcePath);
 
   try {
     const previewStat = await fs.stat(previewPath);
-    if (previewStat.mtimeMs >= sourceStat.mtimeMs) return;
+    if (previewStat.mtimeMs >= sourceStat.mtimeMs) return true;
   } catch (error) {
     if (error.code !== 'ENOENT') throw error;
   }
@@ -65,30 +36,67 @@ async function ensurePreview(sourcePath) {
   await sharp(sourcePath)
     .rotate()
     .resize({ width: 64, height: 64, fit: 'inside', withoutEnlargement: true })
-    .webp({ quality: 45, effort: 4 })
+    .webp({ quality: 45, effort: 6 })
     .toFile(previewPath);
   hexo.log.info(`[image previews] generated ${path.relative(hexo.base_dir, previewPath)}`);
+  return true;
+}
+
+async function mapLimit(items, limit, callback) {
+  for (let index = 0; index < items.length; index += limit) {
+    await Promise.all(items.slice(index, index + limit).map(callback));
+  }
+}
+
+async function imageAssets() {
+  const assets = hexo.model('PostAsset').toArray();
+  const images = [];
+
+  for (const asset of assets) {
+    if (await isImage(asset.source)) images.push(asset);
+  }
+
+  return images;
+}
+
+async function removeOrphanedPreviews(directory) {
+  let entries;
+  try {
+    entries = await fs.readdir(directory, { withFileTypes: true });
+  } catch (error) {
+    if (error.code === 'ENOENT') return;
+    throw error;
+  }
+
+  await Promise.all(entries.map(async entry => {
+    const entryPath = path.join(directory, entry.name);
+    if (entry.isDirectory()) {
+      await removeOrphanedPreviews(entryPath);
+      return;
+    }
+
+    if (!entry.isFile() || !entry.name.endsWith(PREVIEW_SUFFIX)) return;
+
+    const sourcePath = entryPath.slice(0, -PREVIEW_SUFFIX.length);
+    try {
+      await fs.access(sourcePath);
+    } catch (error) {
+      if (error.code !== 'ENOENT') throw error;
+      await fs.unlink(entryPath);
+      hexo.log.info(`[image previews] removed orphaned ${path.relative(hexo.base_dir, entryPath)}`);
+    }
+  }));
 }
 
 hexo.extend.filter.register('before_generate', async () => {
-  const sourcePaths = await collectImageSources();
-  for (let index = 0; index < sourcePaths.length; index += 3) {
-    await Promise.all(sourcePaths.slice(index, index + 3).map(ensurePreview));
-  }
+  generatedImageAssets = await imageAssets();
+  await mapLimit(generatedImageAssets, CONCURRENCY, ensurePreview);
+  await removeOrphanedPreviews(POSTS_DIR);
 });
 
 hexo.extend.generator.register('article_image_previews', async () => {
-  const sourcePaths = await collectImageSources();
-  const PostAsset = hexo.model('PostAsset');
-
-  return sourcePaths.flatMap(sourcePath => {
-    const assetId = path.relative(hexo.base_dir, sourcePath).split(path.sep).join('/');
-    const asset = PostAsset.findOne({ _id: assetId });
-    if (!asset) return [];
-
-    return [{
-      path: `${asset.path}${PREVIEW_SUFFIX}`,
-      data: () => fs.readFile(`${sourcePath}${PREVIEW_SUFFIX}`)
-    }];
-  });
+  return generatedImageAssets.map(asset => ({
+    path: `${asset.path}${PREVIEW_SUFFIX}`,
+    data: () => fs.readFile(`${asset.source}${PREVIEW_SUFFIX}`)
+  }));
 });
