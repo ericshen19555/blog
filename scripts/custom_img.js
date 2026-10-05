@@ -12,13 +12,33 @@ function escapeAttribute(value) {
 
 hexo.extend.tag.register('cimg', async function(args) {
   const options = {};
-  const raw = args.join(' ');
-  const optionPattern = /([\w-]+)=(?:"([^"]*)"|'([^']*)'|([^\s]+))/g;
-  let match;
+  const optionNames = new Set(['src', 'w', 'alt', 'mt']);
+  let currentName = '';
+  let currentValue = '';
 
-  while ((match = optionPattern.exec(raw)) !== null) {
-    options[match[1]] = match[2] ?? match[3] ?? match[4] ?? '';
+  const saveOption = () => {
+    if (!currentName) return;
+    let value = currentValue.trim();
+    if ((value.startsWith('"') && value.endsWith('"')) ||
+        (value.startsWith("'") && value.endsWith("'"))) {
+      value = value.slice(1, -1);
+    }
+    options[currentName] = value;
+  };
+
+  for (const arg of args) {
+    const separator = arg.indexOf('=');
+    const name = separator < 0 ? '' : arg.slice(0, separator);
+
+    if (optionNames.has(name)) {
+      saveOption();
+      currentName = name;
+      currentValue = arg.slice(separator + 1);
+    } else if (currentName) {
+      currentValue += ` ${arg}`;
+    }
   }
+  saveOption();
 
   const { src = '', w: width = '100%', alt = 'image', mt: marginTop = '0' } = options;
   if (!src) {
@@ -47,5 +67,5 @@ hexo.extend.tag.register('cimg', async function(args) {
     : 'auto';
   const safeAlt = escapeAttribute(alt);
 
-  return `<span class="cimg" style="width:${escapeAttribute(width)};aspect-ratio:${ratio};margin-top:${escapeAttribute(marginTop)}" data-image-alt="${safeAlt}"><img class="cimg-preview" src="${previewUrl}" alt="${safeAlt}" title="${safeAlt}" loading="lazy" decoding="async" width="${displayWidth || ''}" height="${displayHeight || ''}"><img class="cimg-full" data-src="${imageUrl}" alt="" aria-hidden="true" decoding="async" width="${displayWidth || ''}" height="${displayHeight || ''}"></span>`;
+  return `<span class="cimg" title="${safeAlt}" style="width:${escapeAttribute(width)};aspect-ratio:${ratio};margin-top:${escapeAttribute(marginTop)}" data-image-alt="${safeAlt}"><img class="cimg-preview" src="${previewUrl}" alt="${safeAlt}" title="${safeAlt}" loading="lazy" decoding="async" width="${displayWidth || ''}" height="${displayHeight || ''}"><img class="cimg-full" data-src="${imageUrl}" alt="" title="${safeAlt}" aria-hidden="true" decoding="async" width="${displayWidth || ''}" height="${displayHeight || ''}"></span>`;
 }, { async: true });
