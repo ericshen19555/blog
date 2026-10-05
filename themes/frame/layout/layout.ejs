@@ -3,7 +3,7 @@
   <head>
     <%- partial('partials/head') %>
   </head>
-  <body data-image-debug-enabled="<%= env.cmd === 'server' || env.cmd === 's' %>">
+  <body>
     <div class="mask-border">
     </div>
 
@@ -24,8 +24,7 @@
     <% if (theme.local_search.enable) {%>
       <%- partial('partials/search') %>
     <% } %>
-
-    <script defer src="<%- url_for('/js/lazy_images.js') %>"></script>
+    
 
   </body>
 </html>

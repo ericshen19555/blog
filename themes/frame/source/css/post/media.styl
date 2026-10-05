@@ -2,54 +2,6 @@ img
     max-width 100%
     height auto
 
-.cimg
-    display inline-block
-    position relative
-    max-width 100%
-    vertical-align top
-
-    .cimg-preview
-    .cimg-full
-        position absolute
-        inset 0
-        display block
-        width 100%
-        height 100%
-        max-width 100%
-        object-fit contain
-
-    .cimg-preview
-        z-index 1
-        filter blur(3px)
-        transition filter 500ms ease, opacity 500ms ease, visibility 0s linear 500ms
-
-    &.has-full-image .cimg-preview
-        filter blur(0)
-        opacity 0
-        visibility hidden
-
-    .cimg-full
-        z-index 2
-        opacity 0
-        visibility hidden
-
-    // Adjust this blur radius to tune the original image's starting softness.
-    .cimg-reveal
-        filter blur(12px)
-        transition filter 500ms ease, opacity 500ms ease
-
-    .cimg-reveal.is-loaded
-        filter blur(0)
-        opacity 1
-
-    .cimg-full.is-loaded
-        visibility visible
-
-@media (prefers-reduced-motion: reduce)
-    .cimg .cimg-full
-    .cimg .cimg-preview
-        transition none
-
 // fix 16:9 ratio
 .video-container 
     width 100%
@@ -62,3 +14,4 @@ img
     left 0
     width 100%
     height 100%
+
