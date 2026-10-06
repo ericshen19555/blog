@@ -2940,6 +2940,15 @@ pH 超怪，我記得幾乎從頭到尾他都是爛的，剩一個小時左右�
 
 ## 賽後
 
+[成大賽決賽板子](https://hspc.csie.ncku.edu.tw/domjudge/public)
+
+<details>
+  <summary class="border">如果 judge 關了，這邊有截圖</summary>
+
+{% cimg src=HSPCranking.png w=100% alt="成大賽決賽板子" %}
+
+</details>
+
 跟[涓涓](#juanjuannopicmeowfuk)補合照。
 
 {% cimg src=juanjuanyespicmeowfuk.jpg w=80% alt="水豚一隻十元 兩隻十五 三隻十八 四隻十九 第五隻開始免費" %}
