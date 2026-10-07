@@ -12,7 +12,7 @@ function escapeAttribute(value) {
 
 hexo.extend.tag.register('cimg', async function(args) {
   const options = {};
-  const optionNames = new Set(['src', 'w', 'alt', 'mt']);
+  const optionNames = new Set(['src', 'w', 'alt', 'mt', 'animation']);
   let currentName = '';
   let currentValue = '';
 
@@ -40,7 +40,13 @@ hexo.extend.tag.register('cimg', async function(args) {
   }
   saveOption();
 
-  const { src = '', w: width = '100%', alt = 'image', mt: marginTop = '0' } = options;
+  const {
+    src = '',
+    w: width = '100%',
+    alt = 'image',
+    mt: marginTop = '0',
+    animation = '1'
+  } = options;
   if (!src) {
     console.warn('[Hexo cimg] empty image path, skipped.');
     return '';
@@ -67,5 +73,6 @@ hexo.extend.tag.register('cimg', async function(args) {
     : 'auto';
   const safeAlt = escapeAttribute(alt);
 
-  return `<span class="cimg" title="${safeAlt}" style="width:${escapeAttribute(width)};aspect-ratio:${ratio};margin-top:${escapeAttribute(marginTop)}" data-image-alt="${safeAlt}"><img class="cimg-preview" src="${previewUrl}" alt="${safeAlt}" title="${safeAlt}" loading="lazy" decoding="async" width="${displayWidth || ''}" height="${displayHeight || ''}"><img class="cimg-full" data-src="${imageUrl}" alt="" title="${safeAlt}" aria-hidden="true" decoding="async" width="${displayWidth || ''}" height="${displayHeight || ''}"></span>`;
+  const animate = animation === '0' ? '0' : '1';
+  return `<span class="cimg" title="${safeAlt}" style="width:${escapeAttribute(width)};aspect-ratio:${ratio};margin-top:${escapeAttribute(marginTop)}" data-image-alt="${safeAlt}" data-image-animation="${animate}"><img class="cimg-preview" src="${previewUrl}" alt="${safeAlt}" title="${safeAlt}" loading="lazy" decoding="async" width="${displayWidth || ''}" height="${displayHeight || ''}"><img class="cimg-full" data-src="${imageUrl}" alt="" title="${safeAlt}" aria-hidden="true" decoding="async" width="${displayWidth || ''}" height="${displayHeight || ''}"></span>`;
 }, { async: true });

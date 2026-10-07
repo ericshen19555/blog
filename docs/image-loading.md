@@ -15,3 +15,5 @@ Normal browsing starts loading each original when it is within 1000 pixels of th
 To adjust the original image's starting blur, change `filter blur(12px)` in `themes/frame/source/css/post/media.styl` under `.cimg-reveal`. The preview has a separate, subtle 3-pixel blur. The reveal and blur transitions are currently 500 ms; the post-transition safety buffer is 120 ms in `source/js/lazy_images.js`.
 
 To test on demand, run `npm run server` and add `?imageDebug=1`. Automatic original-image loading is paused; click an article image (or focus it and press Enter/Space) to load its original and play the same blur-to-clear animation. Debug controls are disabled in generated deploy builds.
+
+Set `animation=0` on an individual `{% cimg %}` tag to disable the preview-to-original transition. The original replaces the preview immediately after it loads. The default is `animation=1`, which keeps the blur-to-clear transition unless the device's reduced-motion preference is enabled; in that case, the original replaces the preview immediately without blur or transition.

@@ -2,6 +2,7 @@
   const params = new URLSearchParams(window.location.search);
   const debugEnabled = document.body.dataset.imageDebugEnabled === 'true';
   const debug = debugEnabled && params.get('imageDebug') === '1';
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const images = document.querySelectorAll('.cimg');
 
   function loadFullImage(container) {
@@ -22,6 +23,11 @@
     image.addEventListener('load', () => {
       image.dataset.loaded = 'true';
       image.dataset.loading = 'false';
+      if (container.dataset.imageAnimation === '0' || prefersReducedMotion.matches) {
+        image.classList.add('is-loaded');
+        container.classList.add('has-full-image');
+        return;
+      }
       requestAnimationFrame(() => requestAnimationFrame(() => {
         image.classList.add('is-loaded');
         image.addEventListener('transitionend', event => {

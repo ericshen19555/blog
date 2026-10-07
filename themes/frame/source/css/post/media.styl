@@ -45,10 +45,21 @@ img
     .cimg-full.is-loaded
         visibility visible
 
+    &[data-image-animation="0"]
+        .cimg-preview
+        .cimg-full
+            transition none
+
+        .cimg-reveal
+            filter blur(0)
+
 @media (prefers-reduced-motion: reduce)
     .cimg .cimg-full
     .cimg .cimg-preview
         transition none
+
+    .cimg .cimg-reveal
+        filter blur(0)
 
 // fix 16:9 ratio
 .video-container 
