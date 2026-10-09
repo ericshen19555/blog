@@ -69,7 +69,7 @@ tags: contest
 
 我只記得我狀態其實很差。首先 pI 是簽到，於是我光速寫完（寫了一個很麻煩的狀態機，明明不用這麼麻煩），並把他丟到 pA，我甚至在傳送前還確認了幾秒鐘。
 
-這裡就要補充一個小技巧，DOMjugde 在上傳程式（右上角的 Submit 按鈕）的時候，會依照 檔案名稱、附檔名，自動匹配 題號、程式語言，因此可以先：
+這裡就要補充一個<span id="DOMjudge_submitting_trick">小技巧</span>，DOMjudge 在上傳程式（右上角的 Submit 按鈕）的時候，會依照 檔案名稱、附檔名，自動匹配 題號、程式語言，因此可以先：
 
 ```python
 from string import ascii_uppercase as A

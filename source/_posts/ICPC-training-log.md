@@ -1,6 +1,6 @@
 ---
 title: ICPC 團練日記
-date: 2026-10-09 12:58:58
+date: 2026-10-09 14:29:16
 tags: [ICPC, contest]
 ---
 
@@ -462,7 +462,7 @@ max 也搬了他的螢幕（比我螢幕更大的曲面螢幕，超強），我�
 
 ## 賽中
 
-因為前期節奏太快了，導致我平常習慣的檔案管理方式有點爛掉，有些 submit 後的程式碼直接被我蓋過去了沒有好好保存 :pensive:。理論上 vscode 會有 timeline ~~但我中秋節把電腦重灌了所以也沒了 (・∀・\;\;)~~。
+<span id="file_mgmt_fuckedup_by_fast_earlystage_pace">因為前期節奏太快了，導致我平常習慣的檔案管理方式有點爛掉</span>，有些 submit 後的程式碼直接被我蓋過去了沒有好好保存 :pensive:。理論上 VS Code 會有 timeline ~~但我中秋節把電腦重灌了所以也沒了 (・∀・\;\;)~~。
 
 <details>
   <summary class="border">DOMjudge team submissions 截圖</summary>
@@ -1760,6 +1760,24 @@ code
 - pG 因為溝通問題卡了太久，應該提早讓 mocha 接手？
 
 隨便優化一個部份，都有可能讓我們寫出 pL :pensive:。
+
+再自我檢討一下[前期手忙腳亂](#file_mgmt_fuckedup_by_fast_earlystage_pace)的部份，我先前團練時的步驟都是：
+
+1. <a href="{% post_path 2026-Summer-Contests %}#DOMjudge_submitting_trick">開好所有檔案</a>
+
+```python
+from string import ascii_uppercase as A
+for c in A[:題目數量]:
+    with open(f"{c}.py", "w") as file: ...
+    with open(f"{c}.cpp", "w") as file: ...
+```
+
+2. 撰寫 Python, C++ 模板，命名為 `template.py`, `template.py`
+~~我就不貼模板了~~
+
+然而 1 有點小耗時，但我發現根本可以 skip 他，打出 `template` 以後再一直複製這個檔案就好。
+
+對嘛！我之前在糾結什麼！還常常找不到要開哪個檔案...好笨 ><
 
 午餐卡車請了 pizza :yum:
 只是都沒啥拍照紀錄 🫠
