@@ -19,6 +19,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function openSearchPopup() {
     document.querySelector('.search-popup').classList.add('search-activate');
+    document.documentElement.classList.add('search-open');
+    input.focus();
     if (!localSearch.isfetched) {
       localSearch.fetchData();
     } 
@@ -26,6 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function closeSearchPopup() {
     document.querySelector('.search-popup').classList.remove('search-activate');
+    document.documentElement.classList.remove('search-open');
     // refresh search box
     input.value = '';
     container.innerHTML = `<div class="search-result-message" ></div>`;
@@ -37,6 +40,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // close search box
   document.querySelector('.search-popup-overlay').addEventListener('click', closeSearchPopup);
   document.querySelector('.search-close-btn').addEventListener('click', closeSearchPopup);
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && document.querySelector('.search-popup').classList.contains('search-activate')) {
+      closeSearchPopup();
+    }
+  });
 
   function displaySearchResult() {
     if (!localSearch.isfetched) return;
