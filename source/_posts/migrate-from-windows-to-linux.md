@@ -30,7 +30,7 @@ Windows 使用 NTFS（New Technology File System），而 Linux 大多使用 ext
 
 WSL（Windows Subsystem for Linux）是在 Windows 裡面跑一個輕量化的 Linux 虛擬機，基本上完全可以取代 Linux 開發需求（解決編譯速度問題，還有計網概作業，我 Lab0 就是用 WSL 2 做掉的），但是日常使用的便利腳本總不可能跑在 WSL 2 內啊！
 
-小科普：WSL 1 是一個「翻譯機」的概念，把 Linux 指令翻譯成 Windows 指令再執行，想想就覺得問題很多；而 WSL 2 跑的則是真的 Linux 虛擬機。
+小科普：WSL 1 是一個「翻譯機」的概念，把 Linux 系統呼叫翻譯成 Windows 能跑的操作，想想就覺得問題很多；而 WSL 2 則是在輕量化虛擬機內跑真正的 Linux Kernel。
 
 另外補述：因為 Windows 閉源、Linux 開源，因此 Windows 易於將 Linux copy-paste 進來，然而反之極難，若是有 Windows only 的軟體需求，建議不要 [Pure Linux](#pure-linux)。
 
@@ -110,7 +110,7 @@ WSL（Windows Subsystem for Linux）是在 Windows 裡面跑一個輕量化的 L
 
 我測了一輪，我這台電腦上只有 **網卡、藍牙** 有問題：Linux Kernel 抓不到網卡。
 
-先科普一下：在 Linux 上，驅動程式都是直接寫進 Kernel 的，因此正常來說不用額外安裝驅動程式。
+先科普一下：在 Linux 上，大部分驅動程式都是直接寫進 Kernel 的，因此正常來說不用額外安裝驅動程式。
 （所以說很讚欸，我家兩台印表機他都直接抓到了！以前都要額外安裝廠商給的驅動軟體）
 
 然而我這台筆電上的 MediaTek MT7902 網卡（Wi-Fi + 藍牙）長期缺乏 Linux 官方原生支援（閉源，沒被寫進 Kernel），需要打補丁，我在 Linux Live 上裝了 GitHub 上的其中一個補丁，能 work，就開心收工了！
@@ -144,7 +144,7 @@ WSL（Windows Subsystem for Linux）是在 Windows 裡面跑一個輕量化的 L
 - $2$ 個硬碟。容量不同的話較好，比較好分辨。
 下面稱此二硬碟為 Boot 跟 Backup。
 Boot 用來存放 Linux ISO、Clonezilla Live ISO、要**跨系統傳輸**的個人檔案。這個硬碟**會被格式化**。
-Backup 僅用來存放 Windows 全機備份的 ISO 檔案。這個硬碟**不用被格式化**。要傳輸的個人檔案也可以放在這裡。
+Backup 僅用來存放 Windows 全機備份。這個硬碟**不用被格式化**。要傳輸的個人檔案也可以放在這裡。
 我原本想用 $1$ 個，且理論上感覺可以，但執行到一半的時候發現**再生龍似乎無法把備份終點設為自己 ISO 的所在位置**？最後臨時修改方案成 $2$ 個，還好沒有影響太多。
 
 - 連續 $n$ 個小時。
@@ -173,6 +173,8 @@ Backup 僅用來存放 Windows 全機備份的 ISO 檔案。這個硬碟**不用
 
 確保「快速啟動」已經關閉（在舊版控制台的進階電源設定）。
 
+BitLocker 可能會讓再生龍讀不懂你的硬碟而變慢 TAT，反正我沒遇到這個問題，讀者自行注意。
+
 接下來要關閉 Windows 了，*理論上*這會是他最後一次關機，好好跟他道別吧。
 
 按下「關機」的時候可以按住 shift，這樣似乎也能關閉「快速啟動」。
@@ -181,7 +183,7 @@ Backup 僅用來存放 Windows 全機備份的 ISO 檔案。這個硬碟**不用
 
 **再生龍，備份 Windows**
 
-重新開機，此時要進入 BIOS 或 Boot Menu，所以要按鍵盤的特殊按鍵。建議先查好ww。
+重新開機，此時要進入 BIOS 或 Boot Menu，所以要按鍵盤的特殊按鍵，建議先查好ww。
 
 如果還沒有關閉「安全啟動（Secure Boot）」的話，可以進 BIOS 把他關掉。
 
@@ -195,7 +197,7 @@ Clonezilla 好像也會有一個 `Clonezilla live (Default settings, VGA 800x600
 
 我忘記具體流程，因此以下是「出現這選項，肯定要選他！」的攻略：
 
-- 選擇 `device-image`（把**硬碟**做成 **ISO**）。
+- 選擇 `device-image`（把**硬碟**做成**映像檔**）。
 - 選擇 `local_dev`（使用**本機設備**）。
 - 選擇 `Beginner`（精靈引導模式）。
 - 選擇 `savedisk`（因為要備份的是 Windows 的一整個**硬碟**）。
@@ -215,7 +217,7 @@ Clonezilla 好像也會有一個 `Clonezilla live (Default settings, VGA 800x600
 
 確定以後再生龍就會開始快樂工作了。
 
-再生龍使用 Block Copy，而不是以檔案為單位複製，所以很快，可以幾乎跑滿硬碟的傳輸上限，再生龍我的英雄。
+再生龍使用 Block Copy，而不是以檔案為單位複製，且僅會複製已用區塊，所以很快，可以幾乎跑滿硬碟的傳輸上限，再生龍我的英雄。
 
 {% cimg src=Clonezilla_my_hero.png w=85% alt="再生龍我的英雄" %}
 
@@ -230,6 +232,12 @@ Clonezilla 好像也會有一個 `Clonezilla live (Default settings, VGA 800x600
 **擁抱 Linux**
 
 跟再生龍說再見，重新開機，在 Ventoy 裡面選 Linux，剩下應該不用教了。
+
+---
+
+**撿回 Windows？**
+
+我沒做過這步所以不知道 (・∀・)，留做讀者練習題，會了再教我ww。
 
 # Linux 快速鍵
 
