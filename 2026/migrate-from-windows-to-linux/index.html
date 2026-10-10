@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="暴力又被TLE">
+
+
+    <meta name="subtitle" content="PY 派對">
+
+
+    <meta name="description" content="PY 派對">
+
+
+
+
+
+<title>Windows 11 → Linux | TLE&#39;s blog</title>
+
+
+
+    <link rel="icon" href="/blog/%E5%B0%8F%E6%83%A1%E9%AD%94.jpg">
+
+
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Roboto+Mono&display=swap');
+</style>
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/blog/css/style.css">
+    
+
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/blog/js/menu.js"></script>
+    
+    <script src="/blog/js/format.js"></script>
+    
+    <script src="/blog/js/features/content.js"></script>
+    
+
+
+
+
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+
+
+
+
+
+  <!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><style type="text/css">
+.spoiler {
+  display: inline;
+}
+p.spoiler {
+  display: flex;
+}
+.spoiler a {
+  pointer-events: none;
+}
+.spoiler-blur, .spoiler-blur > * {
+  transition: text-shadow .5s ease;
+}
+.spoiler .spoiler-blur, .spoiler .spoiler-blur > * {
+  color: rgba(0, 0, 0, 0);
+  background-color: rgba(0, 0, 0, 0);
+  text-shadow: 0 0 10px grey;
+  cursor: pointer;
+}
+.spoiler .spoiler-blur:hover, .spoiler .spoiler-blur:hover > * {
+  text-shadow: 0 0 5px grey;
+}
+.spoiler-box, .spoiler-box > * {
+  transition: color .5s ease,
+  background-color .5s ease;
+}
+.spoiler .spoiler-box, .spoiler .spoiler-box > * {
+  color: black;
+  background-color: black;
+  text-shadow: none;
+}</style><meta name="generator" content="Hexo 8.1.2"></head>
+  <body data-image-debug-enabled="false">
+    <div class="mask-border">
+    </div>
+
+    <div class="wrapper">
+
+      <div class="header">
+  <div class="flex-container">
+    <div class="header-inner">
+      <div class="site-brand-container">
+        <a href="/blog/">
+          
+            TLE
+          
+        </a>
+      </div>
+      <div id="menu-btn" class="menu-btn" onclick="toggleMenu()">
+        Menu
+      </div>
+      <nav class="site-nav">
+        <ul class="menu-list">
+          
+            
+              <li class="menu-item">
+                <a href="/blog/">Home</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/blog/archives/">Archive</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/blog/tag/">Tags</a>
+              </li> 
+                   
+          
+          
+            <li class="menu-item search-btn">
+              <a href="#">Search</a>
+            </li>
+          
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main">
+        <div class="flex-container">
+          <article id="post">
+
+  
+  <aside id="floating-toc" class="post-toc" aria-label="Table of contents">
+    <div class="post-toc-panel" aria-hidden="true">
+      <div class="post-toc-header">
+        <span class="toc-title">Contents</span>
+        <button class="toc-pin" type="button" aria-label="Pin contents" aria-pressed="false">📌</button>
+      </div>
+      <div class="post-toc-scroll"><div class="toc-entries"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E6%83%85%E6%8F%90%E8%A6%81"><span class="toc-text"> 前情提要</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%93%81%E6%9C%89-linux-%E7%9A%84%E6%96%B9%E6%A1%88"><span class="toc-text"> 擁有 Linux 的方案</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#wsl-2"><span class="toc-text"> WSL 2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#dual-system"><span class="toc-text"> Dual System</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pure-linux"><span class="toc-text"> Pure Linux</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%81%B7%E7%A7%BB%E8%A8%88%E7%95%AB"><span class="toc-text"> 遷移計畫</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BB%9F%E9%AB%94"><span class="toc-text"> 軟體</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%96%8B%E7%99%BC"><span class="toc-text"> 開發</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%A5%E5%B8%B8%E4%BE%BF%E5%88%A9%E8%BB%9F%E9%AB%94"><span class="toc-text"> 日常便利軟體</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%81%8A%E6%88%B2"><span class="toc-text"> 遊戲</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#microsoft-office"><span class="toc-text"> Microsoft Office</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A1%AC%E9%AB%94%E7%9B%B8%E5%AE%B9%E6%80%A7"><span class="toc-text"> 硬體相容性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%82%99%E4%BB%BD-windows"><span class="toc-text"> 備份 Windows</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%80%8B%E4%BA%BA%E6%AA%94%E6%A1%88"><span class="toc-text"> 個人檔案</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#windows-%E5%85%A8%E6%A9%9F%E5%82%99%E4%BB%BD"><span class="toc-text"> Windows 全機備份</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%81%B7%E7%A7%BB-sop"><span class="toc-text"> 遷移 SOP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%BA%96%E5%82%99%E5%B7%A5%E5%85%B7"><span class="toc-text"> 準備工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sop"><span class="toc-text"> SOP</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#linux-%E5%BF%AB%E9%80%9F%E9%8D%B5"><span class="toc-text"> Linux 快速鍵</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%BB%9F%E9%AB%94%E5%AE%89%E8%A3%9D"><span class="toc-text"> 軟體安裝</span></a></li></ol></div></div>
+    </div>
+    <div class="post-toc-rail"><span class="toc-rail-icon" aria-hidden="true">☰</span></div>
+  </aside>
+
+
+
+  
+    <div class="post-head">
+    <div class="post-info">
+        <div class="tag-list">
+            
+                
+                    <span class="post-tag">
+                        <a href="/blog/tags/system/">
+                            system
+                        </a>
+                    </span>    
+                           
+            
+        </div>
+        <div class="post-title">
+            
+            
+                Windows 11 → Linux
+            
+            
+        </div>
+        <span class="post-date">
+            10月 9, 2026 · 02:56 下午
+        </span>
+    </div>
+    <div class="post-img">
+        
+            <div class="h-line-primary"></div>
+              
+    </div>
+</div>
+    <div class="post-content">
+    <h1 id="前情提要"><a class="markdownIt-Anchor" href="#前情提要"></a> 前情提要</h1>
+<p>我從小到大（約莫半個月前）一直都是 Windows 的死忠支持者。</p>
+<p>但是 Windows 最近一直讓我感覺拉完了：</p>
+<ol>
+<li>編譯速度極慢。<br />
+Windows 使用 NTFS（New Technology File System），而 Linux 大多使用 ext4（Fourth Extended Filesystem）。前者在大檔案 I/O 方面很強，但處理大量小檔案時 overhead 很大。<br />
+而程式開發屬於後者，編譯、執行時都需要讀寫海量小檔案。每次打比賽用 Linux 的時候，總是讓我很羨慕那個編譯速度。</li>
+<li>軟體相容性。<br />
+有很多開源的神奇小工具都只能在 Unix 架構上跑，我只能麻煩地尋找 Windows 替代品。<br />
+計網概作業的 Makefile 只有給 Unix 版本 😭。</li>
+<li>閉源，導致系統與硬體驅動之間的相容性問題不斷。<br />
+驅動問題真的一直煩我很久了，時不時 Windows Update 給我自動更新，驅動就爛了，還得自己手動從 UX 設計極差的網站裡面翻出不知道能不能用的驅動。<br />
+在 2026/9/24 的時候，我點開了 <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=ywehA3HqxZ8">rekrap2 - No Armor Hardcore - S3 Episode 1 - Lost<br />
+</a> 準備好好享受，但每隔不到 10 秒就掉幀，連 480p 也會掉幀到底是什麼鬼？我的筆電雖然已經三年了，但 i7-13700H 沒理由播不了 4K 影片啊？瞪了一下資源管理器，只要一播影片，3D 運算就蹭蹭往上飆，而 Video encode/decode 穩如泰山，嘗試手動下載 Intel 的驅動程式，結果官網是爛的？好不容易找到了似乎是對的載點，下載下來的東西也是爛的？反正我試了很久不會修，倒是裝個擴充功能強制 h264 就好了。<br />
+但這不對啊！！！因此這可以說是壓垮駱駝的最後一根稻草，我一回到家的隔天（9/25）就開始研究<strong>徹底逃離</strong> Windows、擁抱 Linux。</li>
+</ol>
+<h1 id="擁有-linux-的方案"><a class="markdownIt-Anchor" href="#擁有-linux-的方案"></a> 擁有 Linux 的方案</h1>
+<p>按照<s>瘋狂程度</s>遞增排序。</p>
+<h2 id="wsl-2"><a class="markdownIt-Anchor" href="#wsl-2"></a> WSL 2</h2>
+<p>WSL（Windows Subsystem for Linux）是在 Windows 裡面跑一個輕量化的 Linux 虛擬機，基本上完全可以取代 Linux 開發需求（解決編譯速度問題，還有計網概作業，我 Lab0 就是用 WSL 2 做掉的），但是日常使用的便利腳本總不可能跑在 WSL 2 內啊！</p>
+<p>小科普：WSL 1 是一個「翻譯機」的概念，把 Linux 系統呼叫翻譯成 Windows 能跑的操作，想想就覺得問題很多；而 WSL 2 則是在輕量化虛擬機內跑真正的 Linux Kernel。</p>
+<p>另外補述：因為 Windows 閉源、Linux 開源，因此 Windows 易於將 Linux copy-paste 進來，然而反之極難，若是有 Windows only 的軟體需求，建議不要 <a href="#pure-linux">Pure Linux</a>。</p>
+<h2 id="dual-system"><a class="markdownIt-Anchor" href="#dual-system"></a> Dual System</h2>
+<p>裝 Windows / Linux 雙系統，開機時切換。</p>
+<p>理論上是最穩健安全的方案，也很適合作為遷移系統時過渡，但對我來說有種裝尿袋的拖累感，而且我筆電的 SSD 也不大（512 GB），而且我已經下定決心要<strong>徹底逃離</strong>。</p>
+<p><small> 聽 AI 說 Windows Update 似乎有可能會把開機選系統的選單關掉，讓你直接進 Windows 💀。 </small></p>
+<h2 id="pure-linux"><a class="markdownIt-Anchor" href="#pure-linux"></a> Pure Linux</h2>
+<p>字面意思，等同於重灌，且比重灌更麻煩，因為需要尋找軟體替代品、熟悉新系統，成本極高 💸，但我信<s>讀資工系的</s>我付得起，且信馬上回本 🤑。</p>
+<h1 id="遷移計畫"><a class="markdownIt-Anchor" href="#遷移計畫"></a> 遷移計畫</h1>
+<p>以下只提我的狀況，僅作為參考。</p>
+<p>建議先直接關閉 Windows 的快速啟動（在舊版控制台的進階電源設定）、進 BIOS 關閉安全啟動（Secure Boot）。</p>
+<h2 id="軟體"><a class="markdownIt-Anchor" href="#軟體"></a> 軟體</h2>
+<h3 id="開發"><a class="markdownIt-Anchor" href="#開發"></a> 開發</h3>
+<p>我現在基本上只用 VS Code 了，Linux 完美支援，甚至體驗會比 Windows 好，因為 NTFS 小檔案 I/O 真的太慢了。</p>
+<h3 id="日常便利軟體"><a class="markdownIt-Anchor" href="#日常便利軟體"></a> 日常便利軟體</h3>
+<p>以下這些東西都會在後面提到我最終的解決方案。</p>
+<ul>
+<li>剪貼簿共用<br />
+手機、平板、電腦之間共用剪貼簿，我必須要有的功能，會極大影響我生產力。 <br />
+我之前是用 Windows 和 Samsung 合作的剪貼簿同步（「連接至 Windows」、「手機連接」，之類的名稱），他的 Latency 很低沒錯，但 stability 極差，我甚至寫了一個腳本，當他服務斷線、死也同步不了的時候，可以執行腳本一鍵重啟。 <br />
+我前陣子剛研究過使用其他工具，但都以失敗告終。</li>
+<li>自訂快速鍵<br />
+Auto Hot Key，會稍微影響我的生產力。</li>
+<li>截圖工具<br />
+Snipaste，神級截圖工具，會<strong>極大極大極大極大極大</strong>地影響我的生產力。</li>
+</ul>
+<h3 id="遊戲"><a class="markdownIt-Anchor" href="#遊戲"></a> 遊戲</h3>
+<p>電腦上我只有玩 Minecraft 和 <s>第五人格</s>，後者可以不玩所以完全沒差，前者也很久沒玩了，Java 版似乎有官方支援？但基岩版好像沒有。</p>
+<p>總之是我沒有玩遊戲的意思。</p>
+<h3 id="microsoft-office"><a class="markdownIt-Anchor" href="#microsoft-office"></a> Microsoft Office</h3>
+<p>很少用但確實麻煩，沒有官方的 Linux 版本。<br />
+基本上最主流是 LibreOffice 吧？反正我現在是用他。</p>
+<p>當然我自己要撰寫文件時，肯定是用 VS Code 打 Markdown / <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>LaTeX</mtext></mrow><annotation encoding="application/x-tex">\LaTeX</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.89883em;vertical-align:-0.2155em;"></span><span class="mord text"><span class="mord textrm">L</span><span class="mspace" style="margin-right:-0.36em;"></span><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.68333em;"><span style="top:-2.904999em;"><span class="pstrut" style="height:2.7em;"></span><span class="mord"><span class="mord textrm mtight sizing reset-size6 size3">A</span></span></span></span></span></span><span class="mspace" style="margin-right:-0.15em;"></span><span class="mord text"><span class="mord textrm">T</span><span class="mspace" style="margin-right:-0.1667em;"></span><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.46782999999999997em;"><span style="top:-2.7845em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord textrm">E</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2155em;"><span></span></span></span></span><span class="mspace" style="margin-right:-0.125em;"></span><span class="mord textrm">X</span></span></span></span></span></span>。<br />
+而別人傳來的文書性表單，顯然也該用 .pdf 而非 .docx，後者真的很反智。</p>
+<h2 id="硬體相容性"><a class="markdownIt-Anchor" href="#硬體相容性"></a> 硬體相容性</h2>
+<p><strong>TL;DR</strong></p>
+<ol>
+<li>一定要用 Linux Live 測試硬體支援。</li>
+<li>測試網路，一定要<a target="_blank" rel="noopener" href="https://fast.com/">測速</a>。</li>
+<li>如果打補丁能用，他終究只是補丁。寧願花小幾百塊換個 Kernel 支援的硬體。</li>
+</ol>
+<hr />
+<blockquote>
+<p>Linux Live 記得要選 <code>Try</code> 而非 <code>Install</code> 否則會造成悲劇。</p>
+</blockquote>
+<p>因為我是筆電（ASUS Vivobook X1605VA），硬體上若是有相容問題會比較麻煩，因此我先燒了一個 <strong>Linux Live</strong> 的開機隨身碟，把筆電上的各個硬體都測了一遍。</p>
+<ul>
+<li>網卡、藍牙</li>
+<li>螢幕</li>
+<li>鍵盤、觸控板</li>
+<li>鏡頭</li>
+<li>麥克風、喇叭</li>
+<li>影印機？</li>
+</ul>
+<p>基本上就這些吧。</p>
+<p>我測了一輪，我這台電腦上只有 <strong>網卡、藍牙</strong> 有問題：Linux Kernel 抓不到網卡。</p>
+<p>先科普一下：在 Linux 上，大部分驅動程式都是直接寫進 Kernel 的，因此正常來說不用額外安裝驅動程式。<br />
+（所以說很讚欸，我家兩台印表機他都直接抓到了！以前都要額外安裝廠商給的驅動軟體）</p>
+<p>然而我這台筆電上的 MediaTek MT7902 網卡（Wi-Fi + 藍牙）長期缺乏 Linux 官方原生支援（閉源，沒被寫進 Kernel），需要打補丁，我在 Linux Live 上裝了 GitHub 上的其中一個補丁，能 work，就開心收工了！</p>
+<p>結果真正裝上 Linux 以後才發現網速超慢，我家 Wi-Fi 隨便跑都有 300 Mbps，愣是只能跑到 20 Mbps，完全不可用。但過一陣子又好了，非常不穩定。</p>
+<p>最後我選擇直接 upgrade 到 kernel 7.2，因為從 7.1 開始這張網卡就被寫進 Kernel 了，目前使用起來不再有障礙。</p>
+<h2 id="備份-windows"><a class="markdownIt-Anchor" href="#備份-windows"></a> 備份 Windows</h2>
+<h3 id="個人檔案"><a class="markdownIt-Anchor" href="#個人檔案"></a> 個人檔案</h3>
+<p>我的檔案管理習慣很好，反正是 SSD，我就沒分割磁碟區，直接在 <code>C:</code> 開了一個 <code>我是 D 槽</code> 資料夾（因為這個資料夾包含非 ascii 的中文字元，害我吃盡苦頭…又不能隨便改，很多設定都習慣很差地寫死了絕對位址 💀），所有個人檔案都分類在裡面，因此檔案打包起來非常方便，直接把 <code>我是 D 槽</code> 壓成一個壓縮檔就好了。</p>
+<p>除了個人檔案，也可以把瀏覽器擴充的設定匯出，像是 tampermonkey 裡的腳本珍藏；安裝在電腦裡的軟體同理。而像是 VS Code 的設定有雲端備份，Google Chrome 也有，就挺方便的 :)</p>
+<p>總之要把所有要<strong>跨系統傳輸</strong>的個人檔案包成常數個 .zip。</p>
+<h3 id="windows-全機備份"><a class="markdownIt-Anchor" href="#windows-全機備份"></a> Windows 全機備份</h3>
+<p>為了能毫無後顧之憂地把原先的 Windows 系統洗掉，我也把整顆 SSD 硬碟備份起來，以便我隨時無痛 rollback。</p>
+<p>我是用台灣國網中心開發的免費開源 Clonezilla 再生龍進行備份。</p>
+<h2 id="遷移-sop"><a class="markdownIt-Anchor" href="#遷移-sop"></a> 遷移 SOP</h2>
+<p>以下是我自己跟 AI 討論並想出來的遷移 SOP，可供參考？</p>
+<h3 id="準備工具"><a class="markdownIt-Anchor" href="#準備工具"></a> 準備工具</h3>
+<ul>
+<li>
+<p><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn></mrow><annotation encoding="application/x-tex">2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span></span></span></span> 個硬碟。容量不同的話較好，比較好分辨。<br />
+下面稱此二硬碟為 Boot 跟 Backup。<br />
+Boot 用來存放 Linux ISO、Clonezilla Live ISO、要<strong>跨系統傳輸</strong>的個人檔案。這個硬碟<strong>會被格式化</strong>。<br />
+Backup 僅用來存放 Windows 全機備份。這個硬碟<strong>不用被格式化</strong>。要傳輸的個人檔案也可以放在這裡。<br />
+我原本想用 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span> 個，且理論上感覺可以，但執行到一半的時候發現<strong>再生龍似乎無法把備份終點設為自己 ISO 的所在位置</strong>？最後臨時修改方案成 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn></mrow><annotation encoding="application/x-tex">2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span></span></span></span> 個，還好沒有影響太多。</p>
+</li>
+<li>
+<p>連續 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">n</span></span></span></span> 個小時。<br />
+最好從一個閒閒無事的假日早上開始以下流程。<br />
+<s>畢竟資工人失去了電腦等於是失去了全部生產力</s>。<br />
+主要是在 Linux 剛裝好的時候，會有很多東西需要慢慢裝慢慢調。在正式安裝 Linux 之前，只要關機並把硬碟拔掉，Windows 都還會在。</p>
+</li>
+<li>
+<p>可 USB 共用網路的手機<br />
+如果電腦 Wi-Fi 爛了，USB 共用網路可以說是世紀救星。不用是手機的行動數據，手機也能連上 Wi-Fi 以後藉由 USB 共用，而且網速沒什麼損耗。</p>
+</li>
+</ul>
+<h3 id="sop"><a class="markdownIt-Anchor" href="#sop"></a> SOP</h3>
+<p><strong>打包行李，告別 Windows</strong></p>
+<p>首先的首先，把<a href="#%E5%80%8B%E4%BA%BA%E6%AA%94%E6%A1%88">個人檔案</a>整理、打包好，先統一存放在電腦的硬碟裡面就好。</p>
+<p>下載 Ventoy。<br />
+傳統燒開機碟的軟體（像是 Rufus）一個 USB 裡面只能燒一個 ISO，但 Ventoy 能把 USB 格式化成神奇形式，裡面可以放入多個開機碟，甚至可以存放個人檔案。開機時由 Ventoy 的開機選單選擇要使用哪個 ISO 開機。</p>
+<p>使用 Ventoy 把 Boot 格式化。<strong>Boot 裡面的東西會消失</strong>。<br />
+分區格式建議選擇 <strong>GPT</strong>，他比較新。</p>
+<p>接下來，先把 Linux ISO、Clonezilla Live ISO 丟進 Boot，因為他們的檔案比較大，為了避免碎片化導致後續失敗，先丟他們。</p>
+<p>再把個人檔案丟進 Boot（也可以丟進 Backup 啦）。</p>
+<p>確保「快速啟動」已經關閉（在舊版控制台的進階電源設定）。</p>
+<p>BitLocker 可能會讓再生龍讀不懂你的硬碟而變慢 TAT，反正我沒遇到這個問題，讀者自行注意。</p>
+<p>接下來要關閉 Windows 了，<em>理論上</em>這會是他最後一次關機，好好跟他道別吧。</p>
+<p>按下「關機」的時候可以按住 shift，這樣似乎也能關閉「快速啟動」。</p>
+<hr />
+<p><strong>再生龍，備份 Windows</strong></p>
+<p>重新開機，此時要進入 BIOS 或 Boot Menu，所以要按鍵盤的特殊按鍵，建議先查好ww。</p>
+<p>如果還沒有關閉「安全啟動（Secure Boot）」的話，可以進 BIOS 把他關掉。</p>
+<p>進入 Boot Menu，選擇 Ventoy（可能不會以這個名字顯示，但顯然不會是 Windows）。進入 Ventoy，選擇 Clonezilla。<br />
+記得會有一個 <code>boot in normal mode</code> 的選項，我忘記在哪一步，反正選他。<br />
+Clonezilla 好像也會有一個 <code>Clonezilla live (Default settings, VGA 800x600)</code> 選項，就選他。</p>
+<p><em>以下過程我有點忘記細節了，僅供參考。</em></p>
+<p>再生龍的選項很多很長，每一步都能 cancel，心理壓力不要太大，慢慢來把所有選項確認好，再生龍很溫馴的。</p>
+<p>我忘記具體流程，因此以下是「出現這選項，肯定要選他！」的攻略：</p>
+<ul>
+<li>選擇 <code>device-image</code>（把<strong>硬碟</strong>做成<strong>映像檔</strong>）。</li>
+<li>選擇 <code>local_dev</code>（使用<strong>本機設備</strong>）。</li>
+<li>選擇 <code>Beginner</code>（精靈引導模式）。</li>
+<li>選擇 <code>savedisk</code>（因為要備份的是 Windows 的一整個<strong>硬碟</strong>）。</li>
+<li>如果遇到「檢查」，通常 skip 就好，因為很耗時，而且沒啥必要。<br />
+只是我記得選項是檢查能否正常 restore，可能是「檢查儲存後的映像檔」？<s>我記得 AI 說建議檢查，但我忘記我最後有沒有檢查了。</s></li>
+</ul>
+<p>應該會先選擇<strong>備份目的地</strong>，也就是 Backup 硬碟。<br />
+我遇到的是他會先小黑框實時掃描顯示目前有偵測到的硬碟，<code>^C</code> 結束掃描後會讓你選擇要備份到哪一個硬碟。<br />
+我就是在這邊發現不能備份到再生龍所在硬碟，因此才要使用額外的 Backup 硬碟。<br />
+應該可以選擇要存在哪一個目錄，還有儲存的名稱。</p>
+<p>接下來會選擇<strong>備份來源</strong>，自然是本機 Windows 硬碟。</p>
+<p>我有遇到一個「這個目錄不是一個掛載點，是否繼續執行？」的選項，因為備份目的地是一個普通未格式化硬碟裡面的一個普通目錄，而不是一個獨立的硬碟分區（掛載點），所以再生龍會優雅跟你確認。</p>
+<p>總之以上所有選單都可以慢慢跟 AI 對拍好再選擇，也可以隨時 Cancel 全部重來。</p>
+<p>確定以後再生龍就會開始快樂工作了。</p>
+<p>再生龍使用 Block Copy，而不是以檔案為單位複製，且僅會複製已用區塊，所以很快，可以幾乎跑滿硬碟的傳輸上限，再生龍我的英雄。</p>
+<span class="cimg" title="再生龍我的英雄" style="width:85%;aspect-ratio:1032 / 774;margin-top:0" data-image-alt="再生龍我的英雄" data-image-animation="1"><img class="cimg-preview" src="/blog/2026/migrate-from-windows-to-linux/Clonezilla_my_hero.png.preview.webp" alt="再生龍我的英雄" title="再生龍我的英雄" loading="lazy" decoding="async" width="1032" height="774"><img class="cimg-full" data-src="/blog/2026/migrate-from-windows-to-linux/Clonezilla_my_hero.png" alt="" title="再生龍我的英雄" aria-hidden="true" decoding="async" width="1032" height="774"></span>
+<p>最後會有「<font color="yellow">這個映像檔儲存成功: …</font>」，然後存一些日誌就好了。</p>
+<p>但我卡在一個 <code>Saving PCI info...</code> 的靜止畫面，結果按一下鍵盤就好了，不確定是他在監聽 <code>press any key to exit</code> 還是單純畫面沒 update 到。</p>
+<p>總之有黃色成功字樣肯定是好了，要長按電源鍵強制關機也可以。</p>
+<hr />
+<p><strong>擁抱 Linux</strong></p>
+<p>跟再生龍說再見，重新開機，在 Ventoy 裡面選 Linux，剩下應該不用教了。</p>
+<hr />
+<p><strong>撿回 Windows？</strong></p>
+<p>我沒做過這步所以不知道 (・∀・)，留做讀者練習題，會了再教我ww。</p>
+<h1 id="linux-快速鍵"><a class="markdownIt-Anchor" href="#linux-快速鍵"></a> Linux 快速鍵</h1>
+<p><em>WIP</em></p>
+<h1 id="軟體安裝"><a class="markdownIt-Anchor" href="#軟體安裝"></a> 軟體安裝</h1>
+<p><em>WIP</em></p>
+
+</div> 
+
+
+    <div class="post-footer">
+    <div class="h-line-primary"></div>
+    <nav class="post-nav">
+        <div class="prev-item">
+           
+        </div>
+        <div class="next-item">
+            
+                <div class="icon arrow-right"></div>
+                <div class="post-link">
+                  <a href="/blog/2026/ICPC-training-log/">Next</a>  
+                </div>  
+            
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="post-comment">
+
+     
+
+     
+    
+    
+
+</div>
+     
+  
+</article>
+
+        </div>
+      </div>
+      
+      <div class="footer">
+    <div class="flex-container">
+        <div class="footer-text">
+            
+            
+                暴力又被TLE | 
+            
+            
+                Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> & <a target="_blank" rel="noopener" href="https://github.com/zoeingwingkei/frame/">Frame</a>
+                
+        </div>
+    </div>
+</div>
+
+    </div>
+
+    
+      <div class="search-popup">
+    <div class="search-popup-overlay">  
+    </div>
+    <div class="search-popup-window" >
+        <div class="search-header">
+            <div class="search-input-container">
+              <input autocomplete="off" autocapitalize="off" maxlength="80"
+                     placeholder="NOT Powered by brAnChes Automaton" spellcheck="false"
+                     type="search" class="search-input">
+            </div>
+            <div class="search-close-btn">
+                <div class="icon close-btn"></div>
+            </div>
+        </div>
+        <div class="search-result-container">
+        </div>
+    </div>
+</div>
+
+<script>
+    const searchConfig = {
+        path             : "/blog/search.json",
+        top_n_per_article: 1,
+        unescape         : false,
+        trigger          : "auto",
+        preload          : false
+    }
+</script>
+<script src="/blog/js/searchdb.js"></script>
+<script src="/blog/js/search.js"></script>
+
+    
+
+    <script defer src="/blog/js/lazy_images.js"></script>
+
+  </body>
+</html>
