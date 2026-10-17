@@ -1,0 +1,9 @@
+.footer {
+  margin-top: $margin-primary;
+  border-top: $line-secondary $color-text-primary solid;
+  border-bottom: $line-secondary $color-text-primary solid;
+}
+.footer .footer-text {
+  margin-top: $margin-l-1;
+  margin-bottom: $margin-primary;
+}
