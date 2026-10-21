@@ -111,7 +111,7 @@ AC pG，大家一起回來 debug pC，最後 max 發現我邏輯寫爛，因此�
 
 新平板有夠大的ww
 
-{% cimg src=samsungtabs11ultra.png w=80% alt="Samsumg Tab S11 Ultra 14\"" %}
+{% cimg src=samsungtabs11ultra.png w=80% alt="Samsumg Tab S11 Ultra 14″" %}
 
 # 2026/9/10 - [The 2026 ICPC Asia Japan Online First-Round Contest](https://codeforces.com/gym/106677)
 
@@ -1477,9 +1477,11 @@ pD：
 假設 $x_i$ 是 $i$ 使用 $a$ 被取到的次數，$y_i$ 為使用 $b$，則有：
 
 $$
+\begin{gather}
 x_{a_1} \ge x_{a_2} \ge \dots \ge x_{a_n} \ge 0 \\
 y_{b_1} \ge y_{b_2} \ge \dots \ge y_{b_n} \ge 0 \\
 x_i + y_i = c_i
+\end{gather}
 $$
 
 差分約束能處理的是 $X \le Y + C$ 這樣的式子，其中 $X, Y$ 是變數，$C$ 是常數。
@@ -1487,17 +1489,21 @@ $$
 因此我們能用上面的限制，構造出以下約束：
 
 $$
+\begin{gather}
 x_{a_{i+1}} \le x_{a_{i}} + 0 \\
-y_{b_{i+1}} \le y_{b_{i}} + 0 \\
+y_{b_{i+1}} \le y_{b_{i}} + 0
+\end{gather}
 $$
 
 但 $x_i + y_i = c_i$ 卻不知道怎麼轉化，因為 $x, y$ 在等號同側且同號，不符合差分約束的定義，那不妨把 $y_i$ 都取負號變成 $-y_i$：
 
 $$
+\begin{gather}
 x_{a_{i+1}} \le x_{a_{i}} + 0 \\
 -y_{b_{i}} \le -y_{b_{i+1}} + 0 \\
 x_i \le -y_i + c_i \\
 -y_i \le x_i - c_i
+\end{gather}
 $$
 
 **別忘了**還有 $-y_{b_n} \le 0 \le x_{a_n}$ 這個限制，沒寫會 WA。
@@ -1576,16 +1582,20 @@ void solve() {
 把上面的式子改寫：
 
 $$
+\begin{gather}
 -y_{b_{i}} \le -y_{b_{i+1}} \\
 \Rightarrow x_{b_{i}} - c_{b_{i}} \le x_{b_{i+1}} - c_{b_{i+1}} \\
 \Rightarrow x_{b_{i}} \le x_{b_{i+1}} + c_{b_{i}} - c_{b_{i}}
+\end{gather}
 $$
 
 再一次**別忘了**還有
 
 $$
+\begin{gather}
 -y_{b_n} \le 0 \le x_{a_n} \\
 \Rightarrow x_{b_n} - c_{b_n} \le x_{a_n}
+\end{gather}
 $$
 
 這個限制，沒寫會 WA。
