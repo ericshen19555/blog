@@ -1,6 +1,6 @@
 ---
 title: ICPC 團練日記
-date: 2026-11-02 15:12:58
+date: 2026-11-08 12:09:50
 tags: [ICPC, contest]
 ---
 
@@ -1804,7 +1804,11 @@ for c in A[:題目數量]:
 
 *WIP*
 
-# 2026/10/15 - [2019-2020 ACM-ICPC Pacific Northwest Regional Contest (Div. 1)](https://codeforces.com/gym/102433/my)
+# 2026/10/13 - [The 4th Universal Cup. Stage 2: Grand Prix of Paris](https://qoj.ac/contest/2551)
+
+*WIP*
+
+# 2026/10/15 - [2019-2020 ACM-ICPC Pacific Northwest Regional Contest (Div. 1)](https://codeforces.com/gym/102433/)
 
 星期日要比 NCPC，所以 KFCCA。
 
@@ -2129,4 +2133,260 @@ $\text{去程客運 } 130 + \text{住宿 } 900 + \text{早餐 } 49 + \text{晚�
 - **遇到怪題即時止損，拼難題**
 - **encode, decode 統一寫法**
 - **聽不懂解法就換手實作**
+
+# 2026/10/29 - [The 4th Universal Cup. Stage 21: Grand Prix of Kamigō](https://qoj.ac/contest/3542)
+
+考完期中，大家一起去吃古拉爵 :yum:。
+
+{% cimg src=Grazie.jpg w=85% alt="古拉爵" %}
+
+{% cimg src=hacking_parking_pay_station.jpg w=65% mt=20px alt="白帽駭客(?)" %}
+
+> 唐狗針：（滑一下螢幕邊緣他就進了開始介面）
+> 摩卡：（驚訝）（準備進行更深入的測試）
+> 唐狗針：你們不要亂弄人家的系統，要當善良的白帽駭客
+
+{% cimg src=10-29-dinner.jpg w=65% alt="成大器五花肉" %}
+
+晚餐成大器五花肉。
+
+- pA：mocha 精神了一個不知道在複雜幾點的解 ==，我一邊寫、一邊覺得這麼噁心的東西其他隊伍怎麼寫這麼快、一邊逐漸發現 mocha 在 overthinking。他就是 DSU 然後算連通塊就做完了。明明是好好溝通就能 5 分鐘內做掉的東西 :pensive:，愣是浪費了 30 分鐘在實作。
+但我 `mp(vec, x)` 把 `vector` 傳進去的時候忘記 by reference 吃了一個 TLE 好笨 qwq。
+- pB：三人都花了一些時間想，但想不出好方法 \:/，找不到突破點。
+- pC：照做(?)，眼花沒對照好範測吃了 1 WA。
+- pD：被 mocha 當簽到一眼做掉的中等偏易 DP。
+- pE：看起來很典的字串題，但想不到做法 QWQ。**需要補題**
+- pF：mocha 想了很久，最後我撿起了其中一個他放棄的方向做掉了，但感覺整體稍微花了有點太多時間在想這一題，我又偏笨實作了 20 分鐘。很好的一題題目，算是考了 $\max(|\text{LIS}|, |\text{LDS}|) \ge \sqrt n$ 的性質。
+- ~~pG：為啥這場沒有 G 啊？？？~~
+- pH：聽不懂 mocha 在做啥 \:/，我純寫 API 但交接不順，團隊合作燒雞 :fire:。
+- pI-L：沒碰。
+- pM：構造，嘗試打表但打不出個所以然 qwq。
+
+# 2026/10/30 - [The 2022 ICPC Asia Ho Chi Minh City Regional](https://qoj.ac/contest/4538)
+
+搭早上 10 點的客運回台南。路上遇到小車追撞聯結車，超扯。
+
+下午一樣兩點半左右團練。
+
+- pA：實作不簡單的位元 DP。但我忘記怎麼位元 DP 了，~~且不知道為什麼 max 也忘了~~，總之賽後我重新回憶釐清觀念才補掉。**好題，推！！**
+```cpp
+// 枚舉所有加入順序
+REP(b, 0, bit) {
+    for (int bb = b; bb; bb &= bb - 1) {
+        int i = ctz(bb), s = 1 << i;
+        dp[b] = max(dp[b], dp[b ^ s] + f(i));
+    }
+}
+// 高維前綴和
+REP(i, 0, n) {
+    for (int s = 1 << i, b = s; b < bit; (++b) |= s) {
+        dp[b] += dp[b ^ s];
+    }
+}
+```
+- pB-C：沒到我這邊。
+- pD：裸二分圖。
+- pE：神奇數學，我看 mocha, max 也完全沒碰。
+- pF：閱讀巨水怪題：
+```python
+n, _, _, a, b = map(int, input().split())
+print(n / 2 * (a*a + b*b)**0.5)
+```
+- pG：閱讀水題，~~但我忘記是 mocha 不會閱讀還是不會講話還是我不會聽話~~，總之一個 `<`、`>` 寫反，吃了 1 WA。
+- pH：`Hardest Problem`，還真滅台題，~~通常這種不是應該純唬爛的嗎。~~
+- pI：有趣互動題，砸了個支援 `kth` 的值域 BIT。**好題推**。
+- pJ：簽到 DP。
+- pK：沒到我這邊，但看起來沒有特別不可做，感覺多一點時間可能能做出來？**考慮補題**
+- pL：稍微麻煩的 [String Reorder](https://cses.fi/problemset/task/1743/) 加強版吧，也是寫了 20 幾分鐘，還好一發過了，我可不想 debug 這坨。
+- pM：對答案二分搜型的第 k 小，mocha 藉我之手 vibe 了一坨我看不懂他在幹嘛的東西，重點他連 `int128_t` 也可能會 overflow，什麼鬼啊？但怎麼送都 WA，我還寫了一堆對拍，還翻譯成 Python 確保不是 overflow 的問題。倒數 1 分 48 秒的時候我發現他是要**去重**後的第 k 小，mocha 算成沒去重的 :cold_face:。
+
+{% cimg src=10-30-dinner.jpg w=65% alt="絲瓜" mt=20px %}
+
+晚餐吃絲瓜。
+
+# 2026/10/31 - [The 4th Universal Cup. Stage 17: Grand Prix of St. Petersburg](https://qoj.ac/contest/3384)
+
+{% cimg src=10-31-breakfast.jpg w=65% alt="早餐麵包" %}
+
+這場不少非典，很難但挺有趣。
+
+- pA：滅台題。max 似乎開場看了幾分鐘就丟了。
+- pB：很有趣的 output only，要構造一台有限狀態自動機，可惜又看錯題目，以為題目有保證 secret 陣列數字不重複，結果最後 6 分鐘左右才發現，再加上 mocha 想的分類方式比較難寫、難改，沒來得及在比賽結束前 debug 出來。賽後補掉了，**好題推！**。
+- pC：應該是一題很麻煩的懶標線段樹純科技，差不多精神掉了吧？但我沒信心在剩下的時間內砸掉這題，因此選擇放掉，all in B。**可補題。**
+- pD：我們沒人碰，看來是互動題。
+- pE：mocha, max 有看一下，但沒到我這邊，那時在努力做 B。竟然也是互動，這場超非典的ww。
+- pF：數學，我打完 $\mathcal{O}(m \times n)$ 以後想不出怎麼優化，丟給 max, mocha 也沒人會。
+AI 說是生成函數 + NTT :skull:。
+- pG：看起來也是科技？mocha 開場碰了一下似乎就丟了。**有空的話補補看？**
+- pH：不好寫、case 很多的偏構造題，max 一開始精神了一個對了大半的解，但吃 WA，我後來寫了 checker 和隨機，再跟 max 來回精神對拍終於是解掉了。**好題，推(?)(~~不能只有我受苦~~)**
+- pI：感覺是 adaptive 的強制在線互動，但他用 IO 做 $2 \cdot 10 ^ 5$ 筆來回互動，PyPy 的 flush 直接被操爆，我還得翻譯成 C++。而我也吃了很多筆很紙張的 WA：
+  - `Good` 寫成 `GOOD`
+  - `Good` 還是寫成 `GOOD`（以為是錯邏輯所以只修正了主要邏輯）
+  - 邏輯小 bug
+  - PyPy `flush` 太慢被 TLE
+  - 翻譯成 C++ 但陣列大小 $10 ^5$ 忘記改成 $2 \cdot 10 ^ 5$
+  - 1 char typo，為啥我照抄 Python 程式碼還能抄錯啊？
+  - 終於 AC，總共 7 tries，明明邏輯不難，完全沙比。
+- pJ：只有兩隊寫出來...神奇計幾，mocha 前期看了幾眼就丟了。
+- pK：水簽到，就一眼做掉。這場有簽到讓人十分欣慰。
+- pL-M：mocha, max 似乎花了些時間碰，但最後沒做出來。
+
+午餐吃牛肉麵，原本要跟家人出去吃，但因為要團練所以給我包回來了。
+
+{% cimg src=10-31-lunch.jpg w=65% alt="午餐牛肉麵" %}
+
+有牛肉、很大塊，都沉在下面，又大又 Q，麵也很軟，很好ㄘ :yum:。
+
+# 2026/11/5 - [The 2026 ICPC Latin America Championship](https://codeforces.com/gym/106416)
+
+晚餐元氣屋好ㄘ，但我覺得金泰燒臘還是比較頂 :1st_place_medal:。
+
+{% cimg src=11-5-dinner.jpg w=65% alt="元氣屋燒肉飯" %}
+
+CF 不知道在 bug 幾點的，堅信我們已經 vir 了這場，不讓 vir，最後是 clone 到 mushup。害我們很晚才開始。
+
+- A：mocha 和 max 想了個 $\mathcal{O}(n^2)$ 的不太好的解，實際上判完可行性以後可以 $\mathcal{O}(n)$ 漂亮做掉。\
+WA 了太多次。但不知道賽中能怎麼優化這種情況 qwq。
+- pB：十分聰明有趣的排序題，mocha 幾眼就把他勢能分析掉，需要一個能一直做「全局極值修改」的資結，我砸了單點修改、全局 min, max 的 zkw，總共寫了 20 分鐘左右吧，還算可接受。C++ 的話可以砸 set 不用手刻資結，~~但我這整場都沒用 C++。~~
+而實際因為他的勢能是好的，所以可以直接 `while not sorted`（這迴圈因為勢能分析所以是 $\log V$）內部花 $\mathcal{O}(n \log n)$ 時間 `sort` 配對、做操作。**好題，推！**
+<details>
+  <summary class="border">Solution Code</summary>
+
+```python
+def main():
+    from sys import stdin
+    e = stdin.readline
+
+    def solve(l):
+        ans = []
+        def swap(i, j):
+            ans.append((i, j))
+            s = l[i] + l[j]
+            l[i] = s + 0 >> 1
+            l[j] = s + 1 >> 1
+
+        while l != sorted(l):
+            sl = sorted([(v, -i) for i, v in enumerate(l)])
+            for si in range(n >> 1):
+                x, i = sl[si]
+                y, j = sl[~si]
+                i, j = -i, -j
+                if i > j:
+                    i, j = j, i
+                    x, y = y, x
+                if x == y or x + 1 == y: continue
+                swap(i, j)
+        return ans
+
+    n = int(e())
+    l = list(map(int, e().split()))
+    ans = solve(l)
+    print(len(ans))
+    for i, j in ans:
+        print(f"{i+1} {j+1}")
+main()
+```
+
+</details>
+
+- pC：看板所以沒人碰ww
+- D：max 想到 $X \times K \approx N$ 的時候可以做，所以往分塊想，但想不出來 🫠。 \
+補題：倒過來做就是裸貪心。笨了。
+檢討是：**後半場講完題目可以先不要講想法，先給幾分鐘獨立思考。**
+- pE：水簽到。
+- pF：枚舉所有情況即可。我白癡吃了 $5$ 次罰時：
+  1. `1 << m` 寫成了 `m`。
+  2. 但我把 `m` 改成了 `m << 1`。
+  3. 有一個變數複用了。
+  4. 最後一條不一定是滿的，取錯變數。
+  5. `<=` 寫成了 `<`。
+  6. 終於對了...完全沙比。
+- pG：太晚開始寫，**應該直接寫出 `checker` 開始測試，不要把電腦閒著。**
+- pH：同 pC ww。
+- pI：賽局，但 mocha 沒想出來 qwq。
+- pJ：水簽到。
+- pK：後期有看一下，但觀察不出什麼性質 :/。
+- pL：同 pC, pH，沒碰 \:D。
+
+# 2026/11/6 - [The 4th Universal Cup. Stage 18: Grand Prix of Hongō](https://qoj.ac/contest/3420)
+
+日常獻祭競程二換取競程三 KPI。
+但只去後半堂根本啥也聽不懂 :sob:。
+
+機智如我，開始 vir 前就已經把晚餐買好了。
+
+{% cimg src=11-6-dinner.jpg w=65% alt="晚餐營養口糧" %}
+
+後半場手閒著的時候吃，好ㄘ。
+
+- pA-B：難題沒碰到。
+- pC：計幾，寫了一坨 :poop:，他邏輯上錯了一堆，但跑起來神奇地似乎其實不會錯(?)。可惜完全沒想到這個 edge case：
+{% cimg src=windmill.jpg w=55% alt="風車" mt=10px %}
+這賽中能想到根本是 :goat: 吧。
+**計幾模板：極角排序、向量模板、極角排序後的環狀雙指標 or 二分搜(?)**
+- pD：難題沒碰到。
+- pE：前綴和優化 DP。
+- pF：pG 的 Subtask，mocha 一眼做掉的簽到。
+- pG：mocha 在倒數 40 分鐘精神了一個很龐大的解，於是無情減枝。
+- pH：構造題，但我們連一個合法解都手構不出來，後半場 all in pC 了沒時間打表這題 :pensive:。**有空打表做看看？**
+- pI：難題沒碰到。
+- pJ：我一開始很聰明地（自己說）把 $\max(a - a', b - b')$ 的噁心算式轉換成 $\max((a - b) - (a' - b'), 0)$，然後 mocha 花了 10 分鐘左右想完了，但是 WA。也是寫上了對拍，不到 5 分鐘就寫完了很讚，我覺得我越來越會對拍了。結果是 $n$ 為奇數的 case 沒溝通好。
+可能可以這樣改善：**溝通的時候每個 case 都顯式確認，WA 了先讓想解的人確認邏輯理解無誤。**
+- pK：感覺是太厲害的數學題。沒有觀察出他的神奇性質。
+- pL：滅台。
+- pM：難題沒碰到。
+- pN：mocha 很聰明地觀察到鴿籠性質，最後很唬爛地解掉？題目竟然要求要無損精度算 $10^5$ 範圍內的倒數和？？因此我先用浮點數篩選出所有寬鬆 $10 ^ {-6}$ 的解，再一一用 `Fraction` 無損地算。然後就過了？
+看 [jiangly 的題解](https://qoj.ac/problem/17259/discussion/1418) 他仍是用浮點數 $\pm \epsilon$ 來算，不像我們有 `Fraction` 無損精度，~~小小獎勵還是菜了啊~~。
+看其他有過的人，有人直接用 `__float128` 就過了 :thinking:，~~有些人也是手刻大數了~~。
+
+宵夜蘇打餅 :yum:
+
+{% cimg src=11-6-midnightsnack.jpg w=65% alt="宵夜蘇打餅" %}
+
+# 2026/11/7 - [The 4th Universal Cup. Stage 11: Grand Prix of Southeastern Europe](https://qoj.ac/contest/2828)
+
+因為 max 回家看牙醫，所以改到晚上開始，因為星期六校內沒啥好吃的，所以我開車去市區吃[瓦藍義式廚房](https://maps.app.goo.gl/Sv3NnTdfELgF9xTMA)。
+
+{% cimg src=WaLan.jpg w=85% alt="瓦藍義式廚房" %}
+
+很有料，好ㄘ！附近有便宜停車場，路邊停車位也多，很爽。下次可以揪其他人一起去吃。（這次也有揪但唐狗針是沙比）
+但可能是因為在火車站、高架橋附近，交通設計完全爛透，根本看不懂，隨便一個紅綠燈都是 90 秒，還有一堆禁行汽車、禁止左右轉、單行道，到底在幹嘛？
+
+原本還想去附近評價很好的手作吐司買明天早餐，但交通實在太噁心導致完全來不及，只好作罷 qwq。
+
+- pA：簽到級賽局，純判 $n > \log_2 m$。
+- pB：感覺稍微需要觀察力、分 case 的題。總之 mocha 想了一個很好的 $\mathcal{O}(n \log_2 C)$ 解，不用二分搜很聰明。
+- pC：xor basis 但線代太爛做不出來 :cold_face:。最後發現是 mocha 的數學表示跟我理解的不一樣 :pensive:，下次遇到類似的溝通情境要小心。
+- pD：轉化成圖論題目以後 BFS 就好了，mocha 很聰明的一題。**好題推！**
+- pE：信 max 一通亂做就過了(?)，但輸出的時候一行一行 `print` 太慢被 T，改成一次 `print` 就 AC 了。
+- pF：沒到我這邊，看起來是純科技？但我們後期電腦都在 pC、pL 上切換，完全沒時間搞這題。**可補。**
+- pG：不難的 DP（？
+- pH-J：看 max, mocha 也沒怎麼碰，更是沒到我這邊。
+- pK：何意味的題目，計幾但 $n \le 7$，寫了一個隨便的 $\mathcal{O}(n ^ 2)$ 就過了，官解很漂亮，線性的。就何意味，何不把 $n$ 開大？
+- pL：賽局，但最後差一個 $k = 3$ 的 case 說什麼也想不出來 :sob:。
+
+
+
+<!-- 
+- pA：
+- pB：
+- pC：
+- pD：
+- pE：
+- pF：
+- pG：
+- pH：
+- pI：
+- pJ：
+- pK：
+- pL：
+- pM：
+- pN：
+- pO：
+- pP：
+- pQ：
+- pR：
+- pS：
+- pT：
+ -->
 
