@@ -17,12 +17,14 @@ html.search-open
     background $color-overlay
 
 .search-popup-window
+    box-sizing border-box 
     position absolute
     top 50%
     left 50%
     background $color-background
     transform translate(-50%, -50%)
     width 640px
+    max-width 100%
     height 60%
     border $line-secondary solid $color-text-primary
     overflow hidden
