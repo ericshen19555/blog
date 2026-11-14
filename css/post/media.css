@@ -1,0 +1,74 @@
+img {
+  max-width: 100%;
+  height: auto;
+}
+.cimg {
+  display: inline-block;
+  position: relative;
+  max-width: 100%;
+  vertical-align: top;
+}
+.cimg .cimg-preview,
+.cimg .cimg-full {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+}
+.cimg .cimg-preview {
+  z-index: 1;
+  filter: blur(3px);
+  transition: filter 500ms ease, opacity 500ms ease, visibility 0s linear 500ms;
+}
+.cimg.has-full-image .cimg-preview {
+  filter: blur(0);
+  opacity: 0;
+  visibility: hidden;
+}
+.cimg .cimg-full {
+  z-index: 2;
+  opacity: 0;
+  visibility: hidden;
+}
+.cimg .cimg-reveal {
+  filter: blur(12px);
+  transition: filter 500ms ease, opacity 500ms ease;
+}
+.cimg .cimg-reveal.is-loaded {
+  filter: blur(0);
+  opacity: 1;
+}
+.cimg .cimg-full.is-loaded {
+  visibility: visible;
+}
+.cimg[data-image-animation="0"] .cimg-preview,
+.cimg[data-image-animation="0"] .cimg-full {
+  transition: none;
+}
+.cimg[data-image-animation="0"] .cimg-reveal {
+  filter: blur(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .cimg .cimg-full,
+  .cimg .cimg-preview {
+    transition: none;
+  }
+  .cimg .cimg-reveal {
+    filter: blur(0);
+  }
+}
+.video-container {
+  width: 100%;
+  padding-top: 56.25%;
+  position: relative;
+}
+.video-container>iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
