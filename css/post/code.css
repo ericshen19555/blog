@@ -1,0 +1,39 @@
+.highlight {
+  margin: 0 0 $margin-m-2 0;
+  background-color: $color-code-background;
+  scrollbar-color: $color-text-secondary $color-code-background;
+}
+.highlight::-webkit-scrollbar-track {
+  background: $color-code-background;
+}
+.highlight::-webkit-scrollbar-thumb {
+  border-color: $color-code-background;
+}
+.highlight pre {
+  scrollbar-color: $color-text-secondary $color-code-background;
+}
+.highlight pre::-webkit-scrollbar-track {
+  background: $color-code-background;
+}
+.highlight pre::-webkit-scrollbar-thumb {
+  border-color: $color-code-background;
+}
+.highlight .line {
+  width: $margin-l-2;
+}
+td.gutter {
+  width: $margin-m-2;
+  position: -webkit-sticky;
+  position: sticky;
+  left: 0;
+}
+td.gutter pre {
+  overflow-x: visible;
+}
+td span {
+  line-height: $margin-s-2;
+}
+pre {
+  margin: 0;
+  overflow-x: auto;
+}
