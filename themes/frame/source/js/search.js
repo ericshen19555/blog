@@ -4,6 +4,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const input = document.querySelector('.search-input');
   const container = document.querySelector('.search-result-container');
+  const popup = document.querySelector('.search-popup');
+  const searchButton = document.querySelector('.search-btn');
+  let popupStateVersion = 0;
 
   const localSearch = new LocalSearch({
     path             : searchConfig.path,
@@ -18,7 +21,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function openSearchPopup() {
-    document.querySelector('.search-popup').classList.add('search-activate');
+    if (popup.open) return;
+    // Invalidates pending cleanup if the dialog is reopened during its exit transition.
+    popupStateVersion += 1;
+    popup.showModal();
     document.documentElement.classList.add('search-open');
     input.focus();
     if (!localSearch.isfetched) {
@@ -27,21 +33,32 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function closeSearchPopup() {
-    document.querySelector('.search-popup').classList.remove('search-activate');
-    document.documentElement.classList.remove('search-open');
+    if (!popup.open) return;
+    const closeVersion = ++popupStateVersion;
+    popup.close();
+
+    // Keep the viewport width stable until the exit transition finishes.
+    const exitTransitions = popup.getAnimations({ subtree: true });
+    Promise.all(exitTransitions.map(animation => animation.finished.catch(() => {}))).then(() => {
+      if (closeVersion === popupStateVersion && !popup.open) {
+        document.documentElement.classList.remove('search-open');
+      }
+    });
+
     // refresh search box
     input.value = '';
     container.innerHTML = `<div class="search-result-message" ></div>`;
+    searchButton.focus();
   }
 
   // open search box
-  document.querySelector('.search-btn').addEventListener('click', openSearchPopup);
+  searchButton.addEventListener('click', openSearchPopup);
 
   // close search box
   document.querySelector('.search-popup-overlay').addEventListener('click', closeSearchPopup);
   document.querySelector('.search-close-btn').addEventListener('click', closeSearchPopup);
   document.addEventListener('keydown', event => {
-    if (event.key === 'Escape' && document.querySelector('.search-popup').classList.contains('search-activate')) {
+    if (event.key === 'Escape' && popup.open) {
       closeSearchPopup();
     }
   });

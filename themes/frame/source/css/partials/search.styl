@@ -1,20 +1,40 @@
-.search-popup 
-    visibility hidden
+.search-popup
+    position fixed
+    inset 0
+    width 100vw
+    height 100vh
+    max-width none
+    max-height none
+    margin 0
+    padding 0
+    border 0
+    background transparent
+    overflow hidden
+    transition display 200ms allow-discrete
+
+    &::backdrop
+        background rgba(0, 0, 0, 0.2)
+        backdrop-filter blur(0)
+        opacity 0
+        transition opacity 200ms ease, backdrop-filter 200ms ease, display 200ms allow-discrete
+
+    &[open]::backdrop
+        backdrop-filter blur(6px)
+        opacity 1
+
+@starting-style
+    .search-popup[open]::backdrop
+        backdrop-filter blur(0)
+        opacity 0
 
 html.search-open
     overflow hidden
     scrollbar-gutter stable
     
-.search-activate
-    visibility visible
-
 .search-popup-overlay
-    position fixed
-    left 0
-    top 0
-    height 100%
-    width 100%
-    background $color-overlay
+    position absolute
+    inset 0
+    background transparent
 
 .search-popup-window
     box-sizing border-box 
@@ -26,10 +46,22 @@ html.search-open
     width 640px
     max-width 100%
     height 60%
+    opacity 0
+    transform translate(-50%, -50%) scale(.98)
+    transition width 260ms ease, height 260ms ease, opacity 200ms ease, transform 200ms ease
     border $line-secondary solid $color-text-primary
     overflow hidden
     display flex
     flex-direction column
+
+.search-popup[open] .search-popup-window
+    opacity 1
+    transform translate(-50%, -50%) scale(1)
+
+@starting-style
+    .search-popup[open] .search-popup-window
+        opacity 0
+        transform translate(-50%, -50%) scale(.98)
 
 .search-result-container
     flex-grow 1
@@ -92,3 +124,9 @@ html.search-open
     .search-popup-window
         width 100%
         height 100%
+
+@media (prefers-reduced-motion: reduce)
+    .search-popup
+    .search-popup::backdrop
+    .search-popup-window
+        transition none
